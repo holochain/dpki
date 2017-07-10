@@ -1,0 +1,225 @@
+{
+"Version": 1,
+
+"UUID": "aee5cc40-8c58-4331-8125-fda7e3b61ccc",
+
+"Name": "DPKI",
+"Properties": {
+  "description": "Distributed Public Key Infrastructure which runs on holochain",
+  "language": "en",
+  "initial_admin": "jackThammer"
+  },
+
+  "PropertiesSchemaFile": "properties_schema.json",
+  "DHTConfig": {
+    "HashType": "sha2-256"
+  },
+  "Zomes": [
+    {
+
+        "Name": "users",
+
+        "Description": "This will manage the users in the DPKI application",
+
+        "RibosomeType": "js",
+
+        "CodeFile": "users.js",
+
+        "Entries": [
+          {
+            "Name": "User",
+            "DataFormat": "json",
+            "Sharing": "public",
+            "SchemaFile": "User.json"
+
+          }
+        ],
+
+        "Functions": [
+          {
+            "Name": "UserCreate",
+            "CallingType": "json",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "UserRead",
+            "CallingType": "json",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "UserUpdate",
+            "CallingType": "json",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "UserDelete",
+            "CallingType": "json",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "add_Users_Details",
+            "CallingType": "string",
+            "Exposure": "public"
+          },
+          {
+            "Name": "add_User_Links",
+            "CallingType": "string",
+            "Exposure": "public"
+          }
+        ]
+
+        },
+
+    {
+
+      "Name": "revocation",
+
+      "Description": "This module will be used to create diffrent revocation procedures for a users keys ",
+
+      "RibosomeType": "js",
+
+      "CodeFile": "revocation.js",
+
+
+      "Entries": [
+        {
+          "Name": "revocation",
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "revocation.json"
+
+        },
+        {
+          "Name": "revocation_links",
+          "DataFormat": "links",
+          "Sharing": "public"
+
+        }
+      ],
+
+      "Functions": [
+        {
+          "Name": "revocationCreate",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocationRead",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocationUpdate",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocationDelete",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocation_linksCreate",
+          "CallingType": "links",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocation_linksRead",
+          "CallingType": "links",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocation_linksUpdate",
+          "CallingType": "links",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocation_linksDelete",
+          "CallingType": "links",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "revocation_Key",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "revocation_MN",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "revocation_Athority",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+
+    },
+    {
+
+        "Name": "expiration",
+
+      "Description": "This Zome will manage the expiration of the key (Time of expiry TO BE DECIDED)",
+
+      "RibosomeType": "js",
+
+      "CodeFile": "expiration.js",
+
+
+      "Entries": [
+        {
+          "Name": "expire",
+          "DataFormat": "json",
+          "Sharing": "public",
+          "SchemaFile": "expire.json"
+
+        }
+      ],
+
+      "Functions": [
+        {
+          "Name": "expireCreate",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "expireRead",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "expireUpdate",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "expireDelete",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "Expire",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
+
+    }
+  ]
+}

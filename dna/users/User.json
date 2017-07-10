@@ -1,0 +1,19 @@
+{
+	"title": "User Schema",
+	"type": "object",
+	"properties": {
+		"perm_dpki_id": {
+			"type": "string"
+		},
+		"public_key": {
+			"type": "string"
+		},
+		"Name": {
+			"type": "string"
+		},
+		"Email": {
+			"type": "string"
+		}
+	},
+    "required": ["perm_dpki_id", "public_key"]
+}

@@ -1,0 +1,13 @@
+{
+	"title": "Revocation Schema",
+	"type": "object",
+	"properties": {
+		"revoced_key": {
+			"type": "string"
+		},
+		"timestamp": {
+			"type": "string"
+		}
+	},
+    "required": ["revoced_key", "timestamp"]
+}

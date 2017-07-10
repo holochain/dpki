@@ -1,0 +1,19 @@
+{
+	"title": "Exipre Schema",
+	"type": "object",
+	"properties": {
+		"id": {
+			"type": "string"
+		},
+		"key": {
+			"type": "string"
+		},
+		"gen_timestamp": {
+			"type": "string"
+		},
+		"exp_timestamp": {
+			"type": "string"
+		}
+	},
+    "required": ["id", "key", "exp_timestamp"]
+}
