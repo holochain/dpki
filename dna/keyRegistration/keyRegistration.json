@@ -1,5 +1,5 @@
 {
-	"title": "User Schema",
+	"title": "Key Registration Schema",
 	"type": "object",
 	"properties": {
 		"perm_dpki_id": {
@@ -10,7 +10,10 @@
 		},
 		"shared_ID": {
 			"type": "string"
+		},
+		"revocation_Method_ID": {
+			"type": "string"
 		}
 	},
-    "required": ["perm_dpki_id", "public_key","shared_ID"]
+    "required": ["perm_dpki_id", "public_key","shared_ID","revocation_Method_ID"]
 }

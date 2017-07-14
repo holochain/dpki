@@ -1,3 +1,8 @@
+function genesis(){
+}
+
+
+
 function revocationCreate(){
 
 }

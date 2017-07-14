@@ -1,33 +1,36 @@
 function genesis(){
-  UserCreate();
+  keyRegistrationCreate("1");
   return true;
 }
-function UserCreate(){
-  debug("===========================Phase 1.1 Begin===========================");
-  debug("Creating the user");
-  user={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
-  //debug("user="+user);
+
+function keyRegistrationCreate(choice){
+  debug("Creating the user's keyRegistration");
+  //debug("choice :"+choice);
+  keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:choice};
+  //debug("keyRegistration="+keyRegistration);
   directory=getDirectory();
-  users=commit("User",user);
-  commit("user_directory_link", {Links:[{Base:directory,Link:users,Tag:"User"}]});
-  debug("user_directory_link: "+JSON.stringify(getLink(directory,"User",{Load:true})));
-  //debug("User Created");
+  key=commit("keyRegistration",keyRegistration);
+  commit("user_keyRegistration_link", {Links:[{Base:directory,Link:key,Tag:"keyRegistration"}]});
+  debug("user_keyRegistration_link: "+JSON.stringify(getLink(directory,"keyRegistration",{Load:true})));
+  debug("User keyRegistration Created with the preset revocation Methord to 1");
+  debug("===========================Phase 1.1 End===========================");
 }
 
+function selectRevocationMethord(choice){
+  // This is a multiple choice
+  // 1 = Revocation Key
+  // 2 = M of N Revocation
+  // 3 = Revocation Athority
+  return choice;
+}
 
-function UserRead(){
+function keyRegistrationRead(){
 return true;
 }
-function UserUpdate(){
+function keyRegistrationUpdate(){
 return true;
 }
-function UserDelete(){
-return true;
-}
-function add_Users_Details(){
-return true;
-}
-function add_User_Links(){
+function keyRegistrationDelete(){
 return true;
 }
 
@@ -57,7 +60,7 @@ function validate(entry_type,entry,header,sources) {
 
 function validateLink(linkEntryType,baseHash,links,pkg,sources){
     debug("validate link: "+linkEntryType);
-    if (linkEntryType=="user_directory_link") {
+    if (linkEntryType=="user_keyRegistration_link") {
         var length = links.length;
         // a valid user_directory_link is when:
         // there should just be one or two links only

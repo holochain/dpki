@@ -1,3 +1,4 @@
+
 {
 "Version": 1,
 
@@ -32,6 +33,10 @@
             "Sharing": "public",
             "SchemaFile": "User.json"
 
+          },
+          {
+            "Name": "user_directory_link",
+            "DataFormat": "links"
           }
         ],
 
@@ -73,6 +78,58 @@
         ]
 
         },
+        {
+
+            "Name": "keyRegistration",
+
+            "Description": "This will manage the key Registration of the users",
+
+            "RibosomeType": "js",
+
+            "CodeFile": "keyRegistration.js",
+
+            "Entries": [
+              {
+                "Name": "keyRegistration",
+                "DataFormat": "json",
+                "Sharing": "public",
+                "SchemaFile": "keyRegistration.json"
+
+              },
+              {
+                "Name": "user_keyRegistration_link",
+                "DataFormat": "links"
+              }
+            ],
+
+            "Functions": [
+              {
+                "Name": "keyRegistrationCreate",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "keyRegistrationRead",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "keyRegistrationUpdate",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "keyRegistrationDelete",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              }
+            ]
+
+            },
 
     {
 
