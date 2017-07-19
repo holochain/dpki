@@ -43,18 +43,23 @@
         "Functions": [
           {
             "Name": "UserCreate",
-            "CallingType": "json",
-            "Exposure": "public"
-
-          },
-          {
-            "Name": "UserRead",
-            "CallingType": "json",
+            "CallingType": "string",
             "Exposure": "public"
 
           },
           {
             "Name": "UserUpdate",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "doGetLink",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "UserRead",
             "CallingType": "json",
             "Exposure": "public"
 
@@ -105,18 +110,18 @@
             "Functions": [
               {
                 "Name": "keyRegistrationCreate",
-                "CallingType": "json",
-                "Exposure": "public"
-
-              },
-              {
-                "Name": "keyRegistrationRead",
-                "CallingType": "json",
+                "CallingType": "string",
                 "Exposure": "public"
 
               },
               {
                 "Name": "keyRegistrationUpdate",
+                "CallingType": "string",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "keyRegistrationRead",
                 "CallingType": "json",
                 "Exposure": "public"
 
@@ -160,9 +165,20 @@
 
       "Functions": [
         {
+          "Name": "revocation",
+          "CallingType": "json",
+          "Exposure": "private"
+
+        },{
+          "Name": "regen_user",
+          "CallingType": "string",
+          "Exposure": "public"
+
+        },
+        {
           "Name": "revocationCreate",
           "CallingType": "json",
-          "Exposure": "public"
+          "Exposure": "private"
 
         },
         {
@@ -221,6 +237,11 @@
           "Name": "revocation_Athority",
           "CallingType": "json",
           "Exposure": "public"
+        },
+        {
+          "Name": "doGetKey",
+          "CallingType": "string",
+          "Exposure": "public"
         }
       ]
 
@@ -277,6 +298,29 @@
         }
       ]
 
-    }
+    },{
+
+        "Name": "hclib",
+
+        "Description": "This is used as a lib",
+
+        "RibosomeType": "js",
+
+        "CodeFile": "hclib.js",
+
+        "Entries": [
+
+        ],
+
+        "Functions": [
+          {
+            "Name": "doGet",
+            "CallingType": "json",
+            "Exposure": "public"
+
+          }
+        ]
+
+        }
   ]
 }

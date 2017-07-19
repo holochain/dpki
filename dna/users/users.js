@@ -12,6 +12,7 @@ function UserCreate(){
   commit("user_directory_link", {Links:[{Base:directory,Link:users,Tag:"User"}]});
   debug("user_directory_link: "+JSON.stringify(getLink(directory,"User",{Load:true})));
   //debug("User Created");
+a=getLink(directory,"User",{Load:true})
 }
 
 
@@ -19,8 +20,51 @@ function UserRead(){
 return true;
 }
 function UserUpdate(){
-return true;
+  debug("++++Update User+++++")
+  directory=getDirectory();
+  var user = doGetLink(directory,"User");
+  var n = user.length - 1;
+  debug("N="+n);
+  if (n >= 0) {
+  var oldKey = user[n];
+  debug("olduser"+ JSON.stringify(oldKey))
+
+  //TODO change the "App.Agent.String" when the revocation methord is called from the UI Hash actually changes
+  /*Done so that the same vause is not replaced in the DHT wheich gives an ERROR*/
+  new_user={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:"App.Agent.String"};
+
+  var key = update("User",new_user,oldKey);
+  debug(new_user+" is "+key);
+  commit("user_directory_link",
+         {Links:[
+             {Base:directory,Link:oldKey,Tag:"User",LinkAction:HC.LinkAction.Del},
+             {Base:directory,Link:key,Tag:"User"}
+         ]});
+      }
+  debug("New_user_directory_link: "+JSON.stringify(getLink(directory,"User",{Load:true})));
+  return true;
 }
+// helper function to call getLinks, handle the no links entry error, and build a simpler links array.
+function doGetLink(base,tag) {
+    // get the tag from the base in the DHT
+    var links = getLink(base, tag,{Load:true});
+    if (isErr(links)) {
+        links = [];
+    }
+     else {
+        links = links.Links;
+    }
+    debug("Links:"+JSON.stringify(links));
+    var links_filled = [];
+    for (var i=0;i <links.length;i++) {
+        links_filled.push(links[i].H);
+    }
+    return links_filled;
+}
+function isErr(result) {
+    return ((typeof result === 'object') && result.name == "HolochainError");
+  }
+
 function UserDelete(){
 return true;
 }
