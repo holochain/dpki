@@ -2,14 +2,17 @@
 **Distributed Public Key Infrastructure which runs on HoloChain**
 * The frame for the application is created.
 * Created the User.
-* Assigned the Key Registration for the User (For not the revocation methord is set to 1 (i.e Revocation Key Methord)).
+* Assigned the Key Registration for the User (For not the revocation method is set to 1 (i.e Revocation Key Method)).
+* Signed the Key Registration.
+* Default revocation method (Revocation Key)
 
 ## In Progress:
 Focuses on the first part i.e. the **Key Management**
-* Signing of the Key Registration.
+* Test's for the revocation key.
+* Uses updatedAgent() and test.
 
 ## Note TODO:
-* The revocation methord is hard coded to "1". This can be changed when the work on the UI is started. (The option to select which revocation methord the user want has to be one of first thing that the user does before he can use the application)
+* The revocation method is hard coded to "1". This can be changed when the work on the UI is started. (The option to select which revocation method the user want has to be one of first thing that the user does before he can use the application)
 
 # About dpki:
 To understand this application better. We are doing this in two parts.

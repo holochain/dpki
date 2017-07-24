@@ -8,17 +8,19 @@ function keyRegistrationCreate(){
   debug("Creating the user's keyRegistration");
   revocation_Method_ID=selectRevocationMethord();
   keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
-  debug(keyRegistration.perm_dpki_id);
-  me=getMePrivate();
+  me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
+  a=getLink(me,"keyRegistration",{Load:true});
   debug("User keyRegistration Created with the preset revocation Methord to 1");
   debug("===========================Phase 1.1 End===========================");
   debug("===========================Phase 1.2 Starting===========================");
 //Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
   debug("===========================Phase 1.2 End===========================");
+//return for the testing the function
+return a.Links[0].H;
 }
 function selectRevocationMethord(){
   // This is a multiple choice in the UI. return the choice that the  user makes
@@ -34,7 +36,7 @@ return true;
 }
 function keyRegistrationUpdate(){
   debug("++++Update key Registration+++++")
-  me=getMePrivate();
+  me=getMeAgent();
   var kr = doGetLink(me,"keyRegistration");
   var n = kr.length - 1;
   debug("N="+n);
@@ -57,7 +59,8 @@ function keyRegistrationUpdate(){
          ]});
       }
   debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
-  return true;
+  a=getLink(me,"keyRegistration",{Load:true})
+  return a.Links[0].H;
 }
 
 function doGetLink(base,tag) {
@@ -90,7 +93,7 @@ return true;
 //===============================
 function getDirectory() {return App.DNA.Hash;}
 function getMePublic() {return App.Key.Hash;}
-function getMePrivate(){return App.Agent.Hash;}
+function getMeAgent(){return App.Agent.Hash;}
 // ===============================================================================
 //   VALIDATION functions
 // ===============================================================================

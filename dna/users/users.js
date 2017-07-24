@@ -11,14 +11,11 @@ function UserCreate(){
   users=commit("User",user);
   commit("user_directory_link", {Links:[{Base:directory,Link:users,Tag:"User"}]});
   debug("user_directory_link: "+JSON.stringify(getLink(directory,"User",{Load:true})));
-  //debug("User Created");
-a=getLink(directory,"User",{Load:true})
+  a=getLink(directory,"User",{Load:true})
+  return a.Links[0].H;
 }
 
 
-function UserRead(){
-return true;
-}
 function UserUpdate(){
   debug("++++Update User+++++")
   directory=getDirectory();
@@ -42,11 +39,34 @@ function UserUpdate(){
          ]});
       }
   debug("New_user_directory_link: "+JSON.stringify(getLink(directory,"User",{Load:true})));
-  return true;
+  a=getLink(directory,"User",{Load:true});
+  return a.Links[0].H;
 }
+
+
+//======================
+function UserRead(){
+return true;
+}
+function UserDelete(){
+return true;
+}
+function add_Users_Details(){
+return true;
+}
+function add_User_Links(){
+return true;
+}
+
+//==============================
+// Support functions
+//===============================
+function getDirectory() {return App.DNA.Hash;}
+function getMePublic() {return App.Key.Hash;}
+function getMePrivate(){return App.Agent.Hash;}
+
 // helper function to call getLinks, handle the no links entry error, and build a simpler links array.
-function doGetLink(base,tag) {
-    // get the tag from the base in the DHT
+function doGetLink(base,tag) {// get the tag from the base in the DHT
     var links = getLink(base, tag,{Load:true});
     if (isErr(links)) {
         links = [];
@@ -64,23 +84,6 @@ function doGetLink(base,tag) {
 function isErr(result) {
     return ((typeof result === 'object') && result.name == "HolochainError");
   }
-
-function UserDelete(){
-return true;
-}
-function add_Users_Details(){
-return true;
-}
-function add_User_Links(){
-return true;
-}
-
-//==============================
-// Support functions
-//===============================
-function getDirectory() {return App.DNA.Hash;}
-function getMePublic() {return App.Key.Hash;}
-function getMePrivate(){return App.Agent.Hash;}
 // ===============================================================================
 //   VALIDATION functions
 // ===============================================================================

@@ -1,0 +1,12 @@
+[
+  {
+      "Convey":"Checking if the users details is able to update",
+      "Zome": "users",
+      "FnName": "UserUpdate",
+      "Input" : "",
+      "Output": "%h1%",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  }
+]

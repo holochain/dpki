@@ -2,19 +2,24 @@ function genesis(){
   /*
   This is called in genesis just for testing
   Later once the UI is done it will be called when the user wants to revke his key
-  */revocation();
+  */
+    revocation();
 }
 
 function revocation(){
   debug("===========================Phase 2 (Starts) - Revocation===========================");
   // this is called when the user wants to revoke his keys
-  keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
-  keyRegistration=JSON.parse(keyRegistration.Links[0].E);
-  //debug("ANSWER= "+makeHash(keyRegistration));
+  key=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
+  keyRegistration=JSON.parse(key.Links[0].E);
   callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration);
 
 }
 
+function getKeyRegistrationLink(){
+  key=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
+  keyRegistration=JSON.parse(key.Links[0].E);
+  return key.Links[0].H;
+}
 function callRevocaiton(choice, revocationKey){
 // Depending on the choice that was made for the Revocation Methord that has to be formed
 if(choice=="1"){
@@ -36,7 +41,7 @@ function revocation_Key(revocationKey){
   if(user_revocationKey!=official_revocationKey){
     debug("**ERROR: Revocation Key Does'nt match**")
   }else{
-  //  commitKey();  //TODO this will call the go code that Eric is working on to update the primary key.
+  //  updateAgent();  //TODO this will call the go code that Eric is working on to update the primary key.
     regen_user(); //reinitialize a the new details and the new key Registration
   }
   debug("++++++++Revocation key Completed++++++++++");

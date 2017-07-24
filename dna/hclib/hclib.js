@@ -1,3 +1,7 @@
+/***********
+File for library of methords
+************/
+/*
 function doGetTagLinkLoad(base, tag) {
     // get the tag from the base in the DHT
     var links = getLink(base, tag,{Load:true});

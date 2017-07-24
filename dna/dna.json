@@ -174,6 +174,11 @@
           "CallingType": "string",
           "Exposure": "public"
 
+        },{
+          "Name": "getKeyRegistrationLink",
+          "CallingType": "string",
+          "Exposure": "private"
+
         },
         {
           "Name": "revocationCreate",
