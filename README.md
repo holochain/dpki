@@ -3,10 +3,13 @@
 * The frame for the application is created.
 * Created the User.
 * Assigned the Key Registration for the User (For not the revocation methord is set to 1 (i.e Revocation Key Methord)).
+* Signed the Key Registration.
+* Default revocation methord (Revocation Key)
 
 ## In Progress:
 Focuses on the first part i.e. the **Key Management**
-* Signing of the Key Registration.
+* Test's for the revocation key.
+* Uses updatedAgent() and test.
 
 ## Note TODO:
 * The revocation methord is hard coded to "1". This can be changed when the work on the UI is started. (The option to select which revocation methord the user want has to be one of first thing that the user does before he can use the application)
