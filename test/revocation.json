@@ -1,21 +1,11 @@
 [
   {
-      "Convey":"Updating the key Registration to be revoked in this test",
-      "Zome": "keyRegistration",
-      "FnName": "keyRegistrationUpdate",
-      "Input" : "",
-      "Output": "%h1%",
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
-  },
-  {
-      "Convey":"Checking if we get the correct keyRegistration",
+      "Convey":"Testing the revocation_key Methord",
       "Zome": "revocation",
-      "FnName": "getKeyRegistrationLink",
-      "Input" : "",
-      "Output": "%h1%",
-      "Exposure":"private",
+      "FnName": "revocation",
+      "Input" : "joel",
+      "Output": "true",
+      "Exposure":"public",
       "Err": "",
       "Regexp": ""
   }

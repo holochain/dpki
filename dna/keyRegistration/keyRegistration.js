@@ -7,7 +7,7 @@ function keyRegistrationCreate(){
   debug("select Revocation Methord");//TODO for now the default selection will be "1" i.e the revocation_key Methord
   debug("Creating the user's keyRegistration");
   revocation_Method_ID=selectRevocationMethord();
-  keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
+  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
@@ -31,13 +31,10 @@ function selectRevocationMethord(){
   return choice;
 }
 
-function keyRegistrationRead(){
-return true;
-}
-function keyRegistrationUpdate(){
+function keyRegistrationUpdate(revoked_key){
   debug("++++Update key Registration+++++")
-  me=getMeAgent();
-  var kr = doGetLink(me,"keyRegistration");
+  //me=revoked_key;
+  var kr = doGetLink(revoked_key,"keyRegistration");
   var n = kr.length - 1;
   debug("N="+n);
   if (n >= 0) {
@@ -47,19 +44,22 @@ function keyRegistrationUpdate(){
 
   //TODO change the "2" when the revocation methord is called from the UI Hash actually changes
   /*Done because the same vause is not replaced in the DHT wheich gives an ERROR*/
-  new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
-  //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
-
+  //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
+    new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
+  /*  debug("App.Agent.Hash="+App.Agent.Hash)
+    debug("App.AgentTop.Hash="+App.Agent.TopHash)
+    debug("App.Key.Hash="+App.Key.Hash)
+  */
   var key = update("keyRegistration",new_keyRegistration,oldKey);
   debug(new_keyRegistration+" is "+key);
   commit("user_keyRegistration_link",
          {Links:[
-             {Base:me,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
-             {Base:me,Link:key,Tag:"keyRegistration"}
+             {Base:revoked_key,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
+             {Base:revoked_key,Link:key,Tag:"keyRegistration"}
          ]});
       }
-  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
-  a=getLink(me,"keyRegistration",{Load:true})
+  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(revoked_key,"keyRegistration",{Load:true})));
+  a=getLink(revoked_key,"keyRegistration",{Load:true})
   return a.Links[0].H;
 }
 
@@ -84,6 +84,9 @@ function isErr(result) {
   }
 
 
+  function keyRegistrationRead(){
+  return true;
+  }
 function keyRegistrationDelete(){
 return true;
 }
@@ -92,7 +95,7 @@ return true;
 // Support functions
 //===============================
 function getDirectory() {return App.DNA.Hash;}
-function getMePublic() {return App.Key.Hash;}
+  function getMeKey() {return App.Key.Hash;}
 function getMeAgent(){return App.Agent.Hash;}
 // ===============================================================================
 //   VALIDATION functions

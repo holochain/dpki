@@ -13,4 +13,4 @@
 * This files will give an error now because i have called the revocation method by default for now. But if you still want to test them you can comment out the revocation method that is called during the genesis in the revocation.js
 
 ### revocation.json
-* These test wont run now since the revocation is called by default in genesis
+* These test for now will check the default revocation method revocation_key()

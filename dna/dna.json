@@ -166,8 +166,8 @@
       "Functions": [
         {
           "Name": "revocation",
-          "CallingType": "json",
-          "Exposure": "private"
+          "CallingType": "string",
+          "Exposure": "public"
 
         },{
           "Name": "regen_user",
@@ -177,13 +177,38 @@
         },{
           "Name": "getKeyRegistrationLink",
           "CallingType": "string",
-          "Exposure": "private"
+          "Exposure": "public"
+
+        },{
+          "Name": "callRevocaiton",
+          "CallingType": "string",
+          "Exposure": "public"
 
         },
         {
-          "Name": "revocationCreate",
+          "Name": "revocation_Key",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "revocation_MN",
           "CallingType": "json",
-          "Exposure": "private"
+          "Exposure": "public"
+        },
+        {
+          "Name": "revocation_Athority",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "doGetKey",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "revocationCreate",
+          "CallingType": "string",
+          "Exposure": "public"
 
         },
         {
@@ -227,26 +252,6 @@
           "CallingType": "links",
           "Exposure": "public"
 
-        },
-        {
-          "Name": "revocation_Key",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "revocation_MN",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "revocation_Athority",
-          "CallingType": "json",
-          "Exposure": "public"
-        },
-        {
-          "Name": "doGetKey",
-          "CallingType": "string",
-          "Exposure": "public"
         }
       ]
 

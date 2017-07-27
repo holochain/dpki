@@ -5,7 +5,7 @@ function genesis(){
 function UserCreate(){
   debug("===========================Phase 1.1 Begin===========================");
   debug("Creating the user");
-  user={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
+  user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
   //debug("user="+user);
   directory=getDirectory();
   users=commit("User",user);
@@ -18,6 +18,10 @@ function UserCreate(){
 
 function UserUpdate(){
   debug("++++Update User+++++")
+    debug("App.Agent.Hash="+App.Agent.Hash)
+    debug("App.AgentTop.Hash="+App.Agent.TopHash)
+    debug("App.Key.Hash="+App.Key.Hash)
+
   directory=getDirectory();
   var user = doGetLink(directory,"User");
   var n = user.length - 1;
@@ -28,7 +32,7 @@ function UserUpdate(){
 
   //TODO change the "App.Agent.String" when the revocation methord is called from the UI Hash actually changes
   /*Done so that the same vause is not replaced in the DHT wheich gives an ERROR*/
-  new_user={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:"App.Agent.String"};
+  new_user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
 
   var key = update("User",new_user,oldKey);
   debug(new_user+" is "+key);
