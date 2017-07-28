@@ -1,12 +1,12 @@
 # Deee_PKI
 **Distributed Public Key Infrastructure which runs on HoloChain**
-# About dpki:
+
+## About dpki:
 To understand this application better. We are doing this in two parts.
 * Key Management
 * Identity Services
 
 ### Key Management
-
 **Entries:**
 * Agents/Users (perm_dpki_id, initial_public_key, shared_ID
   * This is the initial user that is created.
@@ -16,7 +16,6 @@ To understand this application better. We are doing this in two parts.
  * This is used when the user decides which revocation method he uses.  
 
 ### Identity Services
-
 **Note:** Design in progress
 
 **Entries:**
@@ -33,6 +32,7 @@ To understand this application better. We are doing this in two parts.
 
 ## In Progress:
 Focuses on the first part i.e. the **Key Management**
+* UI for the initial work done (Currently their is no UI)
 * Starting work on the M of N revocation Methord()
 
 ## Note TODO:
