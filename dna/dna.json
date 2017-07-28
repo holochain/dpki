@@ -28,27 +28,27 @@
 
         "Entries": [
           {
-            "Name": "User",
+            "Name": "users",
             "DataFormat": "json",
             "Sharing": "public",
-            "SchemaFile": "User.json"
+            "SchemaFile": "users.json"
 
           },
           {
-            "Name": "user_directory_link",
+            "Name": "users_directory_link",
             "DataFormat": "links"
           }
         ],
 
         "Functions": [
           {
-            "Name": "UserCreate",
+            "Name": "usersCreate",
             "CallingType": "string",
             "Exposure": "public"
 
           },
           {
-            "Name": "UserUpdate",
+            "Name": "usersUpdate",
             "CallingType": "string",
             "Exposure": "public"
 
@@ -59,24 +59,24 @@
             "Exposure": "public"
 
           },{
-            "Name": "UserRead",
+            "Name": "usersRead",
             "CallingType": "json",
             "Exposure": "public"
 
           },
           {
-            "Name": "UserDelete",
+            "Name": "usersDelete",
             "CallingType": "json",
             "Exposure": "public"
 
           },
           {
-            "Name": "add_Users_Details",
+            "Name": "addusersDetails",
             "CallingType": "string",
             "Exposure": "public"
           },
           {
-            "Name": "add_User_Links",
+            "Name": "addusersLinks",
             "CallingType": "string",
             "Exposure": "public"
           }
@@ -140,7 +140,7 @@
 
       "Name": "revocation",
 
-      "Description": "This module will be used to create diffrent revocation procedures for a users keys ",
+      "Description": "This module will be used to create diffrent revocation procedures for a userss keys ",
 
       "RibosomeType": "js",
 
@@ -170,7 +170,7 @@
           "Exposure": "public"
 
         },{
-          "Name": "regen_user",
+          "Name": "regenUser",
           "CallingType": "string",
           "Exposure": "public"
 
@@ -186,12 +186,12 @@
 
         },
         {
-          "Name": "revocation_Key",
+          "Name": "revokeKeySelf",
           "CallingType": "string",
           "Exposure": "public"
         },
         {
-          "Name": "revocation_MN",
+          "Name": "revokeKeyMN",
           "CallingType": "json",
           "Exposure": "public"
         },

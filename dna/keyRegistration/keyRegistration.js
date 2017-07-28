@@ -1,28 +1,28 @@
 function genesis(){
-  keyRegistrationCreate();
+  //keyRegistrationCreate();
   return true;
 }
 
 function keyRegistrationCreate(){
-  debug("select Revocation Methord");//TODO for now the default selection will be "1" i.e the revocation_key Methord
+  debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
   debug("Creating the user's keyRegistration");
-  revocation_Method_ID=selectRevocationMethord();
+  revocation_Method_ID=selectRevocationMethod();
   keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
-  debug("User keyRegistration Created with the preset revocation Methord to 1");
+  debug("User keyRegistration Created with the preset revocation method to 1");
   debug("===========================Phase 1.1 End===========================");
   debug("===========================Phase 1.2 Starting===========================");
 //Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
   debug("===========================Phase 1.2 End===========================");
 //return for the testing the function
-return a.Links[0].H;
+return a.Links[0].E;
 }
-function selectRevocationMethord(){
+function selectRevocationMethod(){
   // This is a multiple choice in the UI. return the choice that the  user makes
   // 1 = Revocation Key
   // 2 = M of N Revocation
@@ -40,9 +40,9 @@ function keyRegistrationUpdate(revoked_key){
   if (n >= 0) {
   var oldKey = kr[n];
   debug("oldkeyRegistration"+ JSON.stringify(oldKey))
-  revocation_Method_ID=selectRevocationMethord();
+  revocation_Method_ID=selectRevocationMethod();
 
-  //TODO change the "2" when the revocation methord is called from the UI Hash actually changes
+  //TODO change the "2" when the revocation method is called from the UI Hash actually changes
   /*Done because the same vause is not replaced in the DHT wheich gives an ERROR*/
   //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
     new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};

@@ -5,7 +5,7 @@
 * Assigned the Key Registration for the User (For not the revocation method is set to 1 (i.e Revocation Key Method)).
 * Signed the Key Registration.
 * Default revocation method (Revocation Key)
-* Test's for the user creation, keyReneration (updates) and Revocation key.
+* Test's for the user creation, keyGeneration (updates) and Revocation key.
 
 ## In Progress:
 Focuses on the first part i.e. the **Key Management**
