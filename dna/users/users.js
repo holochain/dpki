@@ -30,7 +30,7 @@ function usersUpdate(){
   var oldKey = user[n];
   debug("olduser"+ JSON.stringify(oldKey))
 
-  //TODO change the "App.Agent.String" when the revocation methord is called from the UI Hash actually changes
+  //TODO change the "App.Agent.String" when the revocation Method is called from the UI Hash actually changes
   /*Done so that the same vause is not replaced in the DHT wheich gives an ERROR*/
   new_user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
 

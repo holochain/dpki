@@ -1,5 +1,5 @@
 /***********
-File for library of methords
+File for library of Methods
 ************/
 /*
 function doGetTagLinkLoad(base, tag) {
