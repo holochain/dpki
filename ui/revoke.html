@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+
+		<title>Our Gallery</title>
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet" type="text/css">
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="style.css">
+
+		<!--[if lt IE 9]>
+		<script src="js/ie-support/html5.js"></script>
+		<script src="js/ie-support/respond.js"></script>
+		<![endif]-->
+
+		<style>
+		.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 38px;
+  padding: 20px;
+  width: 500px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="site-content">
+			<header class="site-header">
+				<div class="container">
+					<a href="index.html" id="branding">
+						<img src="images/" alt="Site Logo">
+						<small class="site-description">revoke</small>
+					</a> <!-- #branding -->
+
+					<nav class="main-navigation">
+						<button type="button" class="toggle-menu"><i class="fa fa-bars"></i></button>
+						<ul class="menu">
+							<li class="menu-item"><a href="index.html">Home</a></li>
+							<li class="menu-item"><a href="register.html">Register Key</a></li>
+							<li class="menu-item current-menu-item"><a href="revoke.html">Revoke</a></li>
+							<li class="menu-item"><a href="about.html">About</a></li>
+						</ul> <!-- .menu -->
+					</nav> <!-- .main-navigation -->
+					<div class="mobile-menu"></div>
+				</div>
+			</header> <!-- .site-header -->
+
+			<main class="main-content">
+				<div class="fullwidth-block gallery">
+					<div class="container">
+						<div class="content fullwidth">
+							<h1 align="center" class="entry-title">Revoke</h1>
+							<h2 align="center">Do you want to revoke your key?</h2>
+							<h3 align="center">Press the revoke button to revoke your key</h3>
+</br></br></br></br>
+							<div align="center">
+								 <button class="button" align="center"><span>Revoke Key!</span></button>
+								 </section>
+							</div>
+						</div>
+					</div>
+				</div> <!-- .testimonial-section -->
+
+
+			</main> <!-- .main-content -->
+
+			<footer class="site-footer">
+				<div class="container">
+					<img src="images/logo-footer.png" alt="Site Logo">
+
+					<address>
+						<p>4229 Moraga St, San Francisco, CA 94122. <br><a href="tel:9488487853">+1 551-253-8650</a> <br> <a href="mailto:joelulahanna@gmail.com">joelulahanna@gmail.com</a></p>
+					</address>
+
+					<div class="social-links">
+						<a href="https://www.facebook.com/metacurrency/"><i class="fa fa-facebook-square"></i></a>
+						<a href="https://twitter.com/metacurrency/"><i class="fa fa-twitter"></i></a>
+						<a href="https://www.instagram.com/ceptr_holochain/"><i class="fa fa-instagram"></i></a>
+						<a href="https://github.com/holochain/dpki/"><i class="fa fa-github"></i></a>
+					</div> <!-- .social-links -->
+
+					<p class="copy">dpki.HC @ Copyright 2017. All right reserved. Designed by jackThammer</p>
+			  </div>
+			</footer> <!-- .site-footer -->
+
+		</div> <!-- #site-content -->
+
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+
+	</body>
+
+</html>
