@@ -3,10 +3,10 @@ function genesis(){
   return true;
 }
 
-function keyRegistrationCreate(){
+function keyRegistrationCreate(arg){
   debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
   debug("Creating the user's keyRegistration");
-  revocation_Method_ID=selectRevocationMethod();
+  revocation_Method_ID=arg.revocation_method;
   keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
@@ -22,6 +22,25 @@ function keyRegistrationCreate(){
 //return for the testing the function
 return a.Links[0].E;
 }
+
+
+function isRegistered() {
+  me=getMeAgent();
+    var registered_users_key = getLink(me, "keyRegistration",{Load:true})
+    debug("Registered users are: "+JSON.stringify(registered_users_key));
+    if( registered_users_key instanceof Error) return false
+    registered_users_key = registered_users_key.Links
+    var agent_id = App.Key.Hash
+    for(var i=0; i < registered_users_key.length; i++) {
+        var profile = JSON.parse(registered_users_key[i]["E"])
+        debug("Registered user key "+i+" is " + profile.shared_ID)
+        if( profile.public_key == agent_id) return true;
+    }
+    return false;
+}
+
+
+
 function selectRevocationMethod(){
   // This is a multiple choice in the UI. return the choice that the  user makes
   // 1 = Revocation Key

@@ -4,7 +4,7 @@
       "Zome": "keyRegistration",
       "FnName": "keyRegistrationCreate",
       "Input" : "",
-      "Output": "{\"perm_dpki_id\":\"Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV\",\"public_key\":\"QmPcpNj6dBz53SvJ8SexLJSvnzSysM8pf6dZFaJ7H6yN1U\",\"revocation_Method_ID\":\"1\",\"shared_ID\":\"test@example.com\"}" ,
+      "Output": "\"{\\\"perm_dpki_id\\\":\\\"Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV\\\",\\\"public_key\\\":\\\"QmPcpNj6dBz53SvJ8SexLJSvnzSysM8pf6dZFaJ7H6yN1U\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"test@example.com\\\"}\"" ,
       "Exposure":"public",
       "Err": "",
       "Regexp": ""
@@ -37,6 +37,16 @@
       "FnName": "keyRegistrationUpdate",
       "Input" : "%agent%",
       "Output": "%h1%",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+      "Convey":"Cheking if key is registered",
+      "Zome": "keyRegistration",
+      "FnName": "isRegistered",
+      "Input" : "",
+      "Output": "true",
       "Exposure":"public",
       "Err": "",
       "Regexp": ""

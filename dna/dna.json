@@ -110,7 +110,7 @@
             "Functions": [
               {
                 "Name": "keyRegistrationCreate",
-                "CallingType": "string",
+                "CallingType": "json",
                 "Exposure": "public"
 
               },
@@ -118,6 +118,12 @@
                 "Name": "keyRegistrationUpdate",
                 "CallingType": "string",
                 "Exposure": "public"
+
+              },
+              {
+                  "Name": "isRegistered",
+                  "CallingType": "string",
+                  "Exposure": "public"
 
               },
               {
