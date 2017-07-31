@@ -7,7 +7,7 @@ function checkInputs(){
     revocation_method: $("#revocation_method").val()
   };
   if(arg.username==""||arg.email==""||arg.address==""||arg.revocation_method==0){
-    alert("Invalid Indput- [Please see that you have filled all the blocks]"+arg.username+"arg"+arg.email+"arg"+arg.address+"arg"+arg.revocation_method);
+    alert("Invalid Input- [Please see that you have filled all the blocks]"+arg.username+"arg"+arg.email+"arg"+arg.address+"arg"+arg.revocation_method);
   modal.style.display = "block";
   }
   else{

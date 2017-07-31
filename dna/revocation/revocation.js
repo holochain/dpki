@@ -11,10 +11,28 @@ function genesis(){
 function revocation(){
   debug("===========================Phase 2 (Starts) - Revocation===========================");
   // this is called when the user wants to revoke his keys
+  if(!isRegistered()){return false}
+  else{
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
   keyRegistration=JSON.parse(key.Links[0].E);
-test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration);
-return test
+  test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration);
+  return test
+}
+}
+
+function isRegistered() {
+  me=getMeAgent();
+    var registered_users_key = getLink(me, "keyRegistration",{Load:true})
+    debug("Registered users are: "+JSON.stringify(registered_users_key));
+    if( registered_users_key instanceof Error) return false
+    registered_users_key = registered_users_key.Links
+    var agent_id = App.Key.Hash
+    for(var i=0; i < registered_users_key.length; i++) {
+        var profile = JSON.parse(registered_users_key[i]["E"])
+        debug("Registered user key "+i+" is " + profile.shared_ID)
+        if( profile.public_key == agent_id) return true;
+    }
+    return false;
 }
 
 function getKeyRegistrationLink(){
