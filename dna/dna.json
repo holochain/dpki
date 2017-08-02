@@ -146,7 +146,7 @@
 
       "Name": "revocation",
 
-      "Description": "This module will be used to create diffrent revocation procedures for a userss keys ",
+      "Description": "This module will be used to create diffrent revocation procedures for a users keys ",
 
       "RibosomeType": "js",
 
