@@ -1,0 +1,12 @@
+[
+  {
+      "Convey":"Testing the revocation_key Methord",
+      "Zome": "revocation",
+      "FnName": "revocation",
+      "Input" : "joel",
+      "Output": "true",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  }
+]
