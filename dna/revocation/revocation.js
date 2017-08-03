@@ -8,14 +8,14 @@ function genesis(){
   //  revocation("joash");
 }
 
-function revocation(){
+function revocation(nUserList){
   debug("===========================Phase 2 (Starts) - Revocation===========================");
   // this is called when the user wants to revoke his keys
   if(!isRegistered()){return false}
   else{
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
   keyRegistration=JSON.parse(key.Links[0].E);
-  test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration);
+  test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration,nUserList);
   return test
 }
 }
@@ -40,7 +40,7 @@ function getKeyRegistrationLink(){
   keyRegistration=JSON.parse(key.Links[0].E);
   return key.Links[0].H;
 }
-function callRevocaiton(choice, revocationKey){
+function callRevocaiton(choice, revocationKey,nUserList){
 // Depending on the choice that was made for the Revocation Method that has to be formed
 if(choice=="1"){
 test=  revokeKeySelf(revocationKey);
@@ -51,7 +51,7 @@ test=  revokeKeySelf(revocationKey);
   */
 }
 else if(choice=="2"){
-test=  revokeKeyMN(revocationKey)
+test=  revokeKeyMN(revocationKey,nUserList)
 }
 else if(choice=="3"){
 test=  revokeKeyAthority(revocationKey);
@@ -62,6 +62,13 @@ if(test==true){regenUser(App.Agent.Hash);}
 return test
 
 }
+
+
+function revokeKeyMN(revocationKey){
+debug("++++++++Call revokeKeyMN+++++++")
+
+}
+
 
 function revokeKeySelf(revocationKey){
   //debug("++++++++Call revokeKeySelf+++++++")
@@ -113,9 +120,7 @@ function regenUser(revoked_key){
   call("keyRegistration","keyRegistrationUpdate",revoked_key);
 }
 
-function revokeKeyMN(revocationKey){
-debug("++++++++Call revokeKeyMN+++++++")
-}
+
 function revokeKeyAthority(revocationKey){
 debug("++++++++Call revokeKeyAthority+++++++")
 }

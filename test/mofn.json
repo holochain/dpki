@@ -1,0 +1,41 @@
+[
+{
+      "Convey":"Make a list of the N Users that are provided by the user",
+      "Zome": "keyRegistration",
+      "FnName": "saveUsersList",
+      "Input" : {"un1":"%agent%","un2":"%agent%","un3":"%agent%","un4":"%agent%"},
+      "Output":"\"%h1%\"",
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },{
+        "Convey":"Checking if the User ID passed actuall exists",
+        "Zome": "keyRegistration",
+        "FnName": "getAgent",
+        "Input" : "Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV",
+        "Output":"%key%",
+        "Exposure":"public",
+        "Err": "",
+        "Regexp": ""
+    },
+    {
+          "Convey":"Faliure conditio:n Checking if the User ID passed actuall exists",
+          "Zome": "keyRegistration",
+          "FnName": "getAgent",
+          "Input" : "Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuJ",
+          "Output":"false",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+      },{
+        "Convey":"Sending request to sign to other users",
+        "Zome": "keyRegistration",
+        "FnName": "getKeySigned",
+        "Input" : "{\"n_user_list\":{\"un1\":\"%agent%\",\"un2\":\"%agent%\",\"un3\":\"%agent%\",\"un4\":\"%agent%\"},\"keyRegistration\":{\"username\":\"joel\"}}",
+        "Output":"{\"reply1\":\"true\",\"reply2\":\"true\",\"reply3\":\"true\",\"reply4\":\"true\"}",
+        "Exposure":"public",
+        "Err": "",
+        "Regexp": ""
+      }
+
+]
