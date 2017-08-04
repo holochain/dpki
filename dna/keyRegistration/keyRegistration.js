@@ -3,7 +3,8 @@ function genesis(){
   return true;
 }
 
-function keyRegistrationCreate(arg,n_user_list){
+function keyRegistrationCreate(arg){
+  var n_user_list
   debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
   debug("Creating the user's keyRegistration");
   revocation_Method_ID=arg.revocation_method;
@@ -27,6 +28,7 @@ keyRegistrationCreateMN(keyRegistration,n_user_list)
 return a.Links[0].E;
 }
 
+/*
 function keyRegistrationCreateMN(key){
 
   keyRegistration=key.keyRegistration;
@@ -54,10 +56,20 @@ reply={reply1:reply1,reply2:reply2,reply3:reply3,reply4:reply4}
 return reply
 }
 
+
+//TODO This is the code that is recived by the N users who has to decide to sign the key
 function receive(from,keyRegistration){
   debug("Recived the message"+keyRegistration);
+//  ret=sign()
+  //return ret
   return true
 }
+
+//TODO here we verify the signature of the N people who sign
+function verifySig(){
+  //verifySignature(signature,data,who)
+}
+
 //Create a list of users using their perm_dpki_id
 function saveUsersList(n_user_list){
   me=getMeAgent();
@@ -89,25 +101,6 @@ debug("Sources: "+sources)
     return false;
 }
 
-/*
-//This is just going to check if the userAddress that was given actually exits
-function checkUserExist(perm_dpki_id){
-  debug("user: "+JSON.stringify(getLink(perm_dpki_id,"users",{Load:true})));
-
-  a=getLink(perm_dpki_id,"users",{Load:true})
-  error1="{\"message\":\"hash not found\",\"name\":\"HolochainError\"}"
-error2="{\"message\":\"multihash length inconsistent: \u0026{126  9924 []}\",\"name\":\"HolochainError\"}"
-  //if(JSON.stringify(a)==error){
-if(JSON.stringify(a)==error1||JSON.stringify(a)==error2){
-    debug("* "+perm_dpki_id+" -> Doesnt Exist");
-    return false
-  }
-  else{
-    debug(perm_dpki_id+" ->exists")
-    return true
-  }
-
-}
 */
 
 function isRegistered() {

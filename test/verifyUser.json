@@ -1,0 +1,20 @@
+[{
+  "Convey":"Check if user exists",
+  "Zome": "dpkiLib",
+  "FnName": "verifyUser",
+  "Input" : "%agent%",
+  "Output":"true",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Check if user exists",
+  "Zome": "dpkiLib",
+  "FnName": "verifyUser",
+  "Input" : "%agent%",
+  "Output":"true",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+}]

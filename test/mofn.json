@@ -12,7 +12,7 @@
         "Convey":"Checking if the User ID passed actuall exists",
         "Zome": "keyRegistration",
         "FnName": "getAgent",
-        "Input" : "Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV",
+        "Input" : "%agent%",
         "Output":"%key%",
         "Exposure":"public",
         "Err": "",

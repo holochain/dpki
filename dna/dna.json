@@ -350,13 +350,13 @@
 
     },{
 
-        "Name": "hclib",
+        "Name": "dpkiLib",
 
         "Description": "This is used as a lib",
 
         "RibosomeType": "js",
 
-        "CodeFile": "hclib.js",
+        "CodeFile": "dpkiLib.js",
 
         "Entries": [
 
@@ -364,8 +364,14 @@
 
         "Functions": [
           {
-            "Name": "doGet",
-            "CallingType": "json",
+            "Name": "verifyUser",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "getAgent",
+            "CallingType": "string",
             "Exposure": "public"
 
           }
