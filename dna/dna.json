@@ -357,7 +357,8 @@
         "RibosomeType": "js",
 
         "CodeFile": "dpkiLib.js",
-
+        
+        "BridgeFuncs": {"verifyUser"},
         "Entries": [
 
         ],
