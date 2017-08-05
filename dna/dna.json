@@ -35,7 +35,7 @@
 
           },
           {
-            "Name": "users_directory_link",
+            "Name": "users_me_link",
             "DataFormat": "links"
           }
         ],
@@ -104,10 +104,44 @@
               {
                 "Name": "user_keyRegistration_link",
                 "DataFormat": "links"
+              },
+              {
+                "Name": "nUserList",
+                "DataFormat": "json",
+                "Sharing": "public",
+                "SchemaFile": "nUserList.json"
+
+              },
+              {
+                "Name": "user_nlist_link",
+                "DataFormat": "links"
               }
             ],
 
             "Functions": [
+              {
+                "Name": "keyRegistrationCreateMN",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },{
+                "Name": "getKeySigned",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "getAgent",
+                "CallingType": "string",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "saveUsersList",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
               {
                 "Name": "keyRegistrationCreate",
                 "CallingType": "json",
@@ -316,22 +350,29 @@
 
     },{
 
-        "Name": "hclib",
+        "Name": "dpkiLib",
 
         "Description": "This is used as a lib",
 
         "RibosomeType": "js",
 
-        "CodeFile": "hclib.js",
-
+        "CodeFile": "dpkiLib.js",
+        
+        "BridgeFuncs": {"verifyUser"},
         "Entries": [
 
         ],
 
         "Functions": [
           {
-            "Name": "doGet",
-            "CallingType": "json",
+            "Name": "verifyUser",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },
+          {
+            "Name": "getAgent",
+            "CallingType": "string",
             "Exposure": "public"
 
           }

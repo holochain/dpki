@@ -4,6 +4,7 @@ function genesis(){
 }
 
 function keyRegistrationCreate(arg){
+  var n_user_list
   debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
   debug("Creating the user's keyRegistration");
   revocation_Method_ID=arg.revocation_method;
@@ -13,16 +14,94 @@ function keyRegistrationCreate(arg){
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
-  debug("User keyRegistration Created with the preset revocation method to 1");
-  debug("===========================Phase 1.1 End===========================");
-  debug("===========================Phase 1.2 Starting===========================");
+//commit the user list too.
+
+if(revocation_Method_ID==2){
+  key={keyRegistration:keyRegistration,
+  n_user_list:n_user_list}
+  debug(JSON.stringify(key))
+keyRegistrationCreateMN(keyRegistration,n_user_list)
+}
 //Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
-  debug("===========================Phase 1.2 End===========================");
 //return for the testing the function
 return a.Links[0].E;
 }
 
+/*
+function keyRegistrationCreateMN(key){
+
+  keyRegistration=key.keyRegistration;
+  n_user_list=key.n_user_list;
+  if(!saveUsersList(n_user_list)){
+    return false
+  }
+  else {
+    //TODO Decided what has to be signed ??
+    test=getKeySigned(key);
+return test
+  }
+}
+
+function getKeySigned(key){
+  keyRegistration=key.keyRegistration;
+  n_user_list=key.n_user_list;
+  reply1=send(getAgent(n_user_list.un1),keyRegistration)
+  reply2=send(getAgent(n_user_list.un2),keyRegistration)
+  reply3=send(getAgent(n_user_list.un3),keyRegistration)
+  reply4=send(getAgent(n_user_list.un4),keyRegistration)
+
+reply={reply1:reply1,reply2:reply2,reply3:reply3,reply4:reply4}
+
+return reply
+}
+
+
+//TODO This is the code that is recived by the N users who has to decide to sign the key
+function receive(from,keyRegistration){
+  debug("Recived the message"+keyRegistration);
+//  ret=sign()
+  //return ret
+  return true
+}
+
+//TODO here we verify the signature of the N people who sign
+function verifySig(){
+  //verifySignature(signature,data,who)
+}
+
+//Create a list of users using their perm_dpki_id
+function saveUsersList(n_user_list){
+  me=getMeAgent();
+  debug(JSON.stringify(n_user_list))
+//Check if user list is valid
+  if(!getAgent(n_user_list.un1)||!getAgent(n_user_list.un2)||!getAgent(n_user_list.un3)||!getAgent(n_user_list.un4))
+  {
+    return false
+  }
+  key=commit("nUserList",n_user_list);
+  debug(key);
+  commit("user_nlist_link", {Links:[{Base:me,Link:key,Tag:"nUserList"}]});
+  debug("user_nlist_link: "+JSON.stringify(getLink(me,"nUserList",{Load:true})));
+test=getLink(me,"nUserList",{Load:false});
+return test.Links[0].H
+}
+
+//This is just going to check if the userAddress that was given actually exits
+function getAgent(handleHash) {
+    var directory = getDirectory();
+  //  var handleHash = makeHash(handle);
+    var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
+debug("Sources: "+sources)
+    if (isErr(sources)) {sources = [];}
+    if (sources != undefined) {
+        var n = sources.length -1;
+        return (n >= 0) ? sources[n] : false;
+    }
+    return false;
+}
+
+*/
 
 function isRegistered() {
   me=getMeAgent();

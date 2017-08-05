@@ -8,10 +8,11 @@ function usersCreate(){
   user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
   //debug("user="+user);
   directory=getDirectory();
+  me=getMeAgent();
   users=commit("users",user);
-  commit("users_directory_link", {Links:[{Base:directory,Link:users,Tag:"users"}]});
-  debug("users_directory_link: "+JSON.stringify(getLink(directory,"users",{Load:true})));
-  a=getLink(directory,"users",{Load:true})
+  commit("users_me_link", {Links:[{Base:me,Link:users,Tag:"users"}]});
+  debug("users_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
+  a=getLink(me,"users",{Load:true})
   return a.Links[0].H;
 }
 
@@ -22,8 +23,8 @@ function usersUpdate(){
     debug("App.AgentTop.Hash="+App.Agent.TopHash)
     debug("App.Key.Hash="+App.Key.Hash)
 
-  directory=getDirectory();
-  var user = doGetLink(directory,"users");
+  me=getMeAgent();
+  var user = doGetLink(me,"users");
   var n = user.length - 1;
   debug("N="+n);
   if (n >= 0) {
@@ -36,14 +37,14 @@ function usersUpdate(){
 
   var key = update("users",new_user,oldKey);
   debug(new_user+" is "+key);
-  commit("users_directory_link",
+  commit("users_me_link",
          {Links:[
-             {Base:directory,Link:oldKey,Tag:"users",LinkAction:HC.LinkAction.Del},
-             {Base:directory,Link:key,Tag:"users"}
+             {Base:me,Link:oldKey,Tag:"users",LinkAction:HC.LinkAction.Del},
+             {Base:me,Link:key,Tag:"users"}
          ]});
       }
-  debug("New_user_directory_link: "+JSON.stringify(getLink(directory,"users",{Load:true})));
-  a=getLink(directory,"users",{Load:true});
+  debug("New_user_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
+  a=getLink(me,"users",{Load:true});
   return a.Links[0].H;
 }
 
@@ -67,7 +68,7 @@ return true;
 //===============================
 function getDirectory() {return App.DNA.Hash;}
 function getMePublic() {return App.Key.Hash;}
-function getMePrivate(){return App.Agent.Hash;}
+function getMeAgent(){return App.Agent.Hash;}
 
 // helper function to call getLinks, handle the no links entry error, and build a simpler links array.
 function doGetLink(base,tag) {// get the tag from the base in the DHT
@@ -108,9 +109,9 @@ function validate(entry_type,entry,header,sources) {
 
 function validateLink(linkEntryType,baseHash,links,pkg,sources){
     debug("validate link: "+linkEntryType);
-    if (linkEntryType=="users_directory_link") {
+    if (linkEntryType=="users_me_link") {
         var length = links.length;
-        // a valid users_directory_link is when:
+        // a valid users_me_link is when:
         // there should just be one or two links only
         if (length==2) {
             // if this is a modify it will have two links the first of which
