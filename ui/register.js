@@ -1,4 +1,3 @@
-
 function checkInputs(){
   var arg = {
     username: $("#name").val(),
@@ -25,10 +24,10 @@ function doRegister(arg){
       $.post("/fn/keyRegistration/isRegistered", "",
           function(registered) {
               console.log('registered: '+registered)
-              if(JSON.parse(registered)) {
-                $('#registerDialog').modal('hide');
+              if(!JSON.parse(registered)){
+                modal.style.display = "block";
               } else {
-                $('#registerDialog').modal('show');
+                alert("You have Succesfully Registered");
               }
           });
     },

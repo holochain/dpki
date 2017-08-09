@@ -155,7 +155,7 @@
               },
               {
                 "Name": "keyRegistrationUpdate",
-                "CallingType": "string",
+                "CallingType": "json",
                 "Exposure": "public"
 
               },
@@ -211,12 +211,12 @@
       "Functions": [
         {
           "Name": "revocation",
-          "CallingType": "string",
+          "CallingType": "json",
           "Exposure": "public"
 
         },{
           "Name": "regenUser",
-          "CallingType": "string",
+          "CallingType": "json",
           "Exposure": "public"
 
         },{

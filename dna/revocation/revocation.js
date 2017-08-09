@@ -8,7 +8,7 @@ function genesis(){
   //  revocation("joash");
 }
 
-function revocation(nUserList){
+function revocation(arg,nUserList){
   debug("===========================(Starts) - Revocation===========================");
   // this is called when the user wants to revoke his keys
   if(!isRegistered()){return false}
@@ -16,6 +16,7 @@ function revocation(nUserList){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
   keyRegistration=JSON.parse(key.Links[0].E);
   test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration,nUserList);
+  if(test==true){regenUser(arg);}
   return test
 }
 }
@@ -44,7 +45,6 @@ function callRevocaiton(choice, revocationKey,nUserList){
 // Depending on the choice that was made for the Revocation Method that has to be formed
 if(choice=="1"){
 test=  revokeKeySelf(revocationKey);
-
 /*  debug("App.Agent.Hash="+App.Agent.Hash)
   debug("App.AgentTop.Hash="+App.Agent.TopHash)
   debug("App.Key.Hash="+App.Key.Hash)
@@ -58,20 +58,17 @@ test=  revokeKeyAthority(revocationKey);
 }
 debug("===========================(Completed) - Revocation===========================");
 
-if(test==true){regenUser(App.Agent.Hash);}
 return test
-
 }
 
 
 function revokeKeyMN(revocationKey){
 debug("++++++++Call revokeKeyMN+++++++")
-
 }
 
 
 function revokeKeySelf(revocationKey){
-  //debug("++++++++Call revokeKeySelf+++++++")
+0//  debug("++++++++Call revokeKeySelf+++++++")
   official_revocationKey=makeHash(revocationKey);
   user_revocationKey=official_revocationKey; //TODO get key from user the user_revocationKey.
   if(user_revocationKey!=official_revocationKey){
@@ -83,17 +80,12 @@ function revokeKeySelf(revocationKey){
     old_Agent_TopHash=App.Agent.TopHash;
 
     //debug("revoked_key="+revoked_key)
-//debug("UpdateAgent called")
-updateAgent({Revocation:"revoked this key"});
+    //debug("UpdateAgent called")
+    updateAgent({Revocation:"revoked this key"});
 //the identity can be used if we want to update the key.hash only
 //updateAgent({Identity:identity});
-new_Agent_TopHash=App.Agent.TopHash;
-debug("App.Agent.Hash="+App.Agent.Hash)
-debug("App.AgentTop.Hash="+App.Agent.TopHash)
-debug("App.Key.Hash="+App.Key.Hash)
-
-//regenUser(revoked_key); //reinitialize a the new details and the new key Registration
-    }
+    new_Agent_TopHash=App.Agent.TopHash;
+}
 
 return  checkUpdate(old_Agent_TopHash,new_Agent_TopHash);
 //  debug("++++++++Revocation key Completed++++++++++");
@@ -112,12 +104,12 @@ function checkUpdate(old_Agent_TopHash,new_Agent_TopHash){
 Funtion user to re-generate the user that just revorked his old keys
 */
 
-function regenUser(revoked_key){
+function regenUser(arg){
 //  debug("Enter the regenUser");
 
-  call("users","usersUpdate","");
+  call("users","usersUpdateDetails",arg);
 //  debug("Calling keyRegistration for regen");
-  call("keyRegistration","keyRegistrationUpdate",revoked_key);
+  call("keyRegistration","keyRegistrationUpdate",arg);
 }
 
 

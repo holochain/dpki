@@ -131,7 +131,7 @@ function isRegistered() {
 }
 
 
-
+/*
 function selectRevocationMethod(){
   // This is a multiple choice in the UI. return the choice that the  user makes
   // 1 = Revocation Key
@@ -140,22 +140,22 @@ function selectRevocationMethod(){
   choice="1";
   return choice;
 }
-
-function keyRegistrationUpdate(revoked_key){
+*/
+function keyRegistrationUpdate(arg){
   debug("++++Update key Registration+++++")
   //me=revoked_key;
-  var kr = doGetLink(revoked_key,"keyRegistration");
+  var kr = doGetLink(App.Agent.Hash,"keyRegistration");
   var n = kr.length - 1;
   debug("N="+n);
   if (n >= 0) {
   var oldKey = kr[n];
   debug("oldkeyRegistration"+ JSON.stringify(oldKey))
-  revocation_Method_ID=selectRevocationMethod();
-
+  //revocation_Method_ID=selectRevocationMethod();
+debug(arg.username)
   //TODO change the "2" when the revocation method is called from the UI Hash actually changes
   /*Done because the same vause is not replaced in the DHT wheich gives an ERROR*/
   //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
-    new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
+    new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method};
   /*  debug("App.Agent.Hash="+App.Agent.Hash)
     debug("App.AgentTop.Hash="+App.Agent.TopHash)
     debug("App.Key.Hash="+App.Key.Hash)
@@ -164,12 +164,12 @@ function keyRegistrationUpdate(revoked_key){
   debug(new_keyRegistration+" is "+key);
   commit("user_keyRegistration_link",
          {Links:[
-             {Base:revoked_key,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
-             {Base:revoked_key,Link:key,Tag:"keyRegistration"}
+             {Base:App.Agent.Hash,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
+             {Base:App.Agent.Hash,Link:key,Tag:"keyRegistration"}
          ]});
       }
-  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(revoked_key,"keyRegistration",{Load:true})));
-  a=getLink(revoked_key,"keyRegistration",{Load:true})
+  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(App.Agent.Hash,"keyRegistration",{Load:true})));
+  a=getLink(App.Agent.Hash,"keyRegistration",{Load:true})
   return a.Links[0].H;
 }
 
