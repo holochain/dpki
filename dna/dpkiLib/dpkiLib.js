@@ -24,6 +24,8 @@ function doGetTagLinkLoad(base, tag) {
 */
 // TODO This function will be used by the other application's
 //  by passing a public_key of the users they want to verify (i.e if he exist in the DHT of the DPKI)
+
+
 function verifyUser(agent_id){
 if(!getAgent(agent_id)){
   return false

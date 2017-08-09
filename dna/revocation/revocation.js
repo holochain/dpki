@@ -9,7 +9,7 @@ function genesis(){
 }
 
 function revocation(nUserList){
-  debug("===========================Phase 2 (Starts) - Revocation===========================");
+  debug("===========================(Starts) - Revocation===========================");
   // this is called when the user wants to revoke his keys
   if(!isRegistered()){return false}
   else{
@@ -56,7 +56,7 @@ test=  revokeKeyMN(revocationKey,nUserList)
 else if(choice=="3"){
 test=  revokeKeyAthority(revocationKey);
 }
-debug("===========================Phase 2 (Completed) - Revocation===========================");
+debug("===========================(Completed) - Revocation===========================");
 
 if(test==true){regenUser(App.Agent.Hash);}
 return test

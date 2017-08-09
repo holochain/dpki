@@ -1,9 +1,13 @@
 function genesis(){
   usersCreate();
+  var public_key = get(App.Key.Hash,{GetMask:HC.GetMask.All});
+  var public_key_all = get(App.Agent.Hash,{GetMask:HC.GetMask.All});
+  debug(public_key)
+  debug(public_key_all)
+
   return true;
 }
 function usersCreate(){
-  debug("===========================Phase 1.1 Begin===========================");
   debug("Creating the user");
   user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
   //debug("user="+user);
@@ -16,6 +20,32 @@ function usersCreate(){
   return a.Links[0].H;
 }
 
+function usersUpdateDetails(arg){
+  debug("++++Update users Details+++++")
+  me=getMeAgent();
+  var user = doGetLink(me,"users");
+  var n = user.length - 1;
+  debug("N="+n);
+  if (n >= 0) {
+  var oldKey = user[n];
+  debug("olduser"+ JSON.stringify(oldKey))
+
+  //TODO change the "App.Agent.String" when the revocation Method is called from the UI Hash actually changes
+  /*Done so that the same vause is not replaced in the DHT wheich gives an ERROR*/
+  new_user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,email:arg.email,address:arg.address};
+
+  var key = update("users",new_user,oldKey);
+  debug(new_user+" is "+key);
+  commit("users_me_link",
+         {Links:[
+             {Base:me,Link:oldKey,Tag:"users",LinkAction:HC.LinkAction.Del},
+             {Base:me,Link:key,Tag:"users"}
+         ]});
+      }
+  debug("New_user_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
+  a=getLink(me,"users",{Load:true});
+  return a.Links[0].H;
+}
 
 function usersUpdate(){
   debug("++++Update users+++++")

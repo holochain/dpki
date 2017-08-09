@@ -4,31 +4,33 @@ function genesis(){
 }
 
 function keyRegistrationCreate(arg){
+  call("users","usersUpdateDetails",arg)
   var n_user_list
   debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
   debug("Creating the user's keyRegistration");
   revocation_Method_ID=arg.revocation_method;
-  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
+  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method}
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
 //commit the user list too.
-
+/*TODO CODE for MN
 if(revocation_Method_ID==2){
   key={keyRegistration:keyRegistration,
   n_user_list:n_user_list}
   debug(JSON.stringify(key))
 keyRegistrationCreateMN(keyRegistration,n_user_list)
 }
+*/
 //Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
 //return for the testing the function
 return a.Links[0].E;
 }
 
-/*
+/*TODO CODE for MN
 function keyRegistrationCreateMN(key){
 
   keyRegistration=key.keyRegistration;
@@ -66,8 +68,16 @@ function receive(from,keyRegistration){
 }
 
 //TODO here we verify the signature of the N people who sign
-function verifySig(){
-  //verifySignature(signature,data,who)
+function verifySig(signature,data,public_key){
+  var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
+  debug(public_key.C)
+  //pass=verifySignature(signature,data,public_key)
+  if(!verifySignature(signature,data,public_key)){
+    return false
+  }
+  else{
+    return true
+  }
 }
 
 //Create a list of users using their perm_dpki_id
@@ -87,6 +97,8 @@ test=getLink(me,"nUserList",{Load:false});
 return test.Links[0].H
 }
 
+*/
+
 //This is just going to check if the userAddress that was given actually exits
 function getAgent(handleHash) {
     var directory = getDirectory();
@@ -101,7 +113,7 @@ debug("Sources: "+sources)
     return false;
 }
 
-*/
+
 
 function isRegistered() {
   me=getMeAgent();

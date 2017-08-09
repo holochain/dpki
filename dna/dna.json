@@ -46,6 +46,11 @@
             "CallingType": "string",
             "Exposure": "public"
 
+          },{
+            "Name": "usersUpdateDetails",
+            "CallingType": "json",
+            "Exposure": "public"
+
           },
           {
             "Name": "usersUpdate",
@@ -357,6 +362,7 @@
         "RibosomeType": "js",
 
         "CodeFile": "dpkiLib.js",
+
 
         "Entries": [
 

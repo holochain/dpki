@@ -10,6 +10,12 @@
 		},
 		"shared_ID": {
 			"type": "string"
+		},
+		"email": {
+			"type": "string"
+		},
+		"address": {
+			"type": "string"
 		}
 	},
     "required": ["perm_dpki_id", "public_key","shared_ID"]
