@@ -27,7 +27,11 @@ function doRegister(arg){
               if(!JSON.parse(registered)){
                 modal.style.display = "block";
               } else {
-                alert("You have Succesfully Registered");
+                $.post("/fn/revocation/getRevocationKeyLink", "",
+                function(key) {
+                alert("Save this key if you selected the Self-Revocation\n"+"Key : "+key);
+                });
+                //alert("You have Succesfully Registered");
               }
           });
     },

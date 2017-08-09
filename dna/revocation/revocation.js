@@ -13,9 +13,7 @@ function revocation(arg,nUserList){
   // this is called when the user wants to revoke his keys
   if(!isRegistered()){return false}
   else{
-  key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-  keyRegistration=JSON.parse(key.Links[0].E);
-  test=  callRevocaiton(keyRegistration.revocation_Method_ID,keyRegistration,nUserList);
+  test=  callRevocaiton(arg,nUserList);
   if(test==true){regenUser(arg);}
   return test
 }
@@ -36,14 +34,29 @@ function isRegistered() {
     return false;
 }
 
-function getKeyRegistrationLink(){
-  key=getLink(getMeKey(),"keyRegistration",{Load:true});
-  keyRegistration=JSON.parse(key.Links[0].E);
+function getRevocationKeyLink(){
+  debug("ENTERED: getRevocationKeyLink")
+  key=getLink(getMeAgent(),"keyRegistration",{Load:true});
+//  keyRegistration=JSON.parse(key.Links[0].E);
   return key.Links[0].H;
 }
-function callRevocaiton(choice, revocationKey,nUserList){
+function getRevocationKey(){
+  debug("ENTERED: getRevocationKey")
+  key=getLink(getMeAgent(),"keyRegistration",{Load:true});
+  keyRegistration=JSON.parse(key.Links[0].E);
+  return keyRegistration
+}
+function callRevocaiton(arg,nUserList){
 // Depending on the choice that was made for the Revocation Method that has to be formed
+
+revocationKey=getRevocationKey();
+choice=keyRegistration.revocation_Method_ID
+
 if(choice=="1"){
+  if(arg.revocationKey==getRevocationKeyLink()){
+    debug("Revoaction key Verified")
+  }
+  else{return false}
 test=  revokeKeySelf(revocationKey);
 /*  debug("App.Agent.Hash="+App.Agent.Hash)
   debug("App.AgentTop.Hash="+App.Agent.TopHash)

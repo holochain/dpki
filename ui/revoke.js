@@ -30,6 +30,7 @@ function revoke(arg){
   ).error(function(response) {
 
   });
+  modal.style.display = "none";
 }
 
 
@@ -59,7 +60,7 @@ $(window).ready(function() {
            if(!JSON.parse(registered)){
             alert("ERROR : You have Not Registered");
            } else {
-               alert("You have already been Registered");
+            //   alert("You have already been Registered");
            }
 
        }

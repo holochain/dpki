@@ -219,8 +219,15 @@
           "CallingType": "json",
           "Exposure": "public"
 
-        },{
-          "Name": "getKeyRegistrationLink",
+        },
+        {
+          "Name": "getRevocationKeyLink",
+          "CallingType": "string",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "getRevocationKey",
           "CallingType": "string",
           "Exposure": "public"
 
