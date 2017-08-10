@@ -363,19 +363,37 @@
     },{
 
         "Name": "dpkiLib",
-
         "Description": "This is used as a lib",
-
         "RibosomeType": "js",
-
         "CodeFile": "dpkiLib.js",
+        "BridgeFuncs": ["verifyUser","registerUserApp","getUserDetails"],
         "Entries": [
+          {
+            "Name": "app_agent_id",
+            "DataFormat": "string",
+            "Sharing": "public"
+          },
+          {
+            "Name": "app_agent_id_link",
+            "DataFormat": "links",
+            "Sharing": "public"
 
+          }
         ],
 
         "Functions": [
           {
             "Name": "verifyUser",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "registerUserApp",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "getUserDetails",
             "CallingType": "string",
             "Exposure": "public"
 
