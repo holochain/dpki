@@ -1,7 +1,17 @@
 [{
-  "Convey":"Check if user exists",
+  "Convey":"Generating a the revocationKey for the user",
+  "Zome": "keyRegistration",
+  "FnName": "keyRegistrationCreate",
+  "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
+  "Output": "\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\"" ,
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Register another application",
   "Zome": "dpkiLib",
-  "FnName": "verifyUser",
+  "FnName": "registerUserApp",
   "Input" : "%agent%",
   "Output":"true",
   "Exposure":"public",
@@ -13,8 +23,19 @@
   "Zome": "dpkiLib",
   "FnName": "verifyUser",
   "Input" : "%agent%",
-  "Output":"true",
+  "Output":"%key%",
   "Exposure":"public",
   "Err": "",
   "Regexp": ""
-}]
+},
+{
+  "Convey":"Provided user details",
+  "Zome": "dpkiLib",
+  "FnName": "getUserDetails",
+  "Input" : "%agent%",
+  "Output":"{\"address\":\"123 Moraga St\",\"email\":\"jackT@hammer.com\",\"key\":\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\",\"shared_ID\":\"Jack\"}",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+}
+]
