@@ -1,15 +1,6 @@
-[{
-  "Convey":"Generating a the revocationKey for the user",
-  "Zome": "keyRegistration",
-  "FnName": "keyRegistrationCreate",
-  "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
-  "Output": "\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\"" ,
-  "Exposure":"public",
-  "Err": "",
-  "Regexp": ""
-},
+[
 {
-  "Convey":"Register another application",
+  "Convey":"Register other applications in the DPKI by passing the App.Agent.Hash of the other application",
   "Zome": "dpkiLib",
   "FnName": "registerUserApp",
   "Input" : "%agent%",
@@ -19,7 +10,7 @@
   "Regexp": ""
 },
 {
-  "Convey":"Check if user exists",
+  "Convey":"Genisis Registration Done",
   "Zome": "dpkiLib",
   "FnName": "verifyUser",
   "Input" : "%agent%",
@@ -29,7 +20,57 @@
   "Regexp": ""
 },
 {
-  "Convey":"Provided user details",
+  "Convey":"Check if user has registered in the DPKI [user not registered]",
+  "Zome": "dpkiLib",
+  "FnName": "hasRegisteredKey",
+  "Input" : "%agent%",
+  "Output":"false",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Cannot Provided user details because the user registered is not registered key in the DPKI",
+  "Zome": "dpkiLib",
+  "FnName": "getUserDetails",
+  "Input" : "%agent%",
+  "Output":"false",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Generating a the revocationKey for the user in the DPKI",
+  "Zome": "keyRegistration",
+  "FnName": "keyRegistrationCreate",
+  "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
+  "Output": "\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\"" ,
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Register the user to the key of the DPKI",
+  "Zome": "dpkiLib",
+  "FnName": "registerToKey",
+  "Input" : "%agent%",
+  "Output":"true",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Check if user has registered in the DPKI",
+  "Zome": "dpkiLib",
+  "FnName": "hasRegisteredKey",
+  "Input" : "%agent%",
+  "Output":"true",
+  "Exposure":"public",
+  "Err": "",
+  "Regexp": ""
+},
+{
+  "Convey":"Provided user details that the user registered in the DPKI",
   "Zome": "dpkiLib",
   "FnName": "getUserDetails",
   "Input" : "%agent%",
