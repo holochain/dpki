@@ -366,7 +366,7 @@
         "Description": "This is used as a lib",
         "RibosomeType": "js",
         "CodeFile": "dpkiLib.js",
-        "BridgeFuncs": ["hasRegisteredKey","registerUserApp","getUserDetails"],
+        "BridgeFuncs": ["hasRegisteredKey","registerDpkiTo","getUserDetails","registerDpkiKeyTo"],
         "Entries": [
           {
             "Name": "app_agent_id",
@@ -393,7 +393,7 @@
             "Exposure": "public"
 
           },{
-            "Name": "registerUserApp",
+            "Name": "registerDpkiTo",
             "CallingType": "string",
             "Exposure": "public"
 
@@ -403,7 +403,7 @@
             "Exposure": "public"
 
           },{
-            "Name": "registerToKey",
+            "Name": "registerDpkiKeyTo",
             "CallingType": "string",
             "Exposure": "public"
 

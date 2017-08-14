@@ -12,14 +12,14 @@ function bridgeGenesis()
 function receive(from, arg)
 {
   //registeres the user to the dpki during genesis
-  if(arg.type == "registerUserApp")
+  if(arg.type == "registerDpkiTo")
   {
-    var val=registerUserApp(arg.app_agent_id)
+    var val=registerDpkiTo(arg.app_agent_id)
   }
   //user has to register him self to the key in the DPKI
-  else if(arg.type == "registerToKey")
+  else if(arg.type == "registerDpkiKeyTo")
   {
-    var val=registerToKey(arg.app_agent_id)
+    var val=registerDpkiKeyTo(arg.app_agent_id)
   }
   //Checks is the agent has registered key in the DPKI and register's the key
   else if(arg.type == "hasRegisteredKey")
@@ -35,7 +35,7 @@ function receive(from, arg)
   return val;
 }
 
-function registerUserApp(app_agent_id){
+function registerDpkiTo(app_agent_id){
   z=commit("app_agent_id_link", {Links:[{Base:App.Agent.Hash,Link:app_agent_id,Tag:"app_agent_id"}]});
   debug(z)
   debug("app_agent_id_link: "+JSON.stringify(getLink(App.Agent.Hash,"app_agent_id",{Load:true})));
@@ -44,7 +44,7 @@ function registerUserApp(app_agent_id){
 
 }
 
-function registerToKey(app_agent_id){
+function registerDpkiKeyTo(app_agent_id){
   keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
   debug(keyRegistration)
   if (isErr(keyRegistration)) {return false}

@@ -2,7 +2,7 @@
 {
   "Convey":"Register other applications in the DPKI by passing the App.Agent.Hash of the other application",
   "Zome": "dpkiLib",
-  "FnName": "registerUserApp",
+  "FnName": "registerDpkiTo",
   "Input" : "%agent%",
   "Output":"true",
   "Exposure":"public",
@@ -52,7 +52,7 @@
 {
   "Convey":"Register the user to the key of the DPKI",
   "Zome": "dpkiLib",
-  "FnName": "registerToKey",
+  "FnName": "registerDpkiKeyTo",
   "Input" : "%agent%",
   "Output":"true",
   "Exposure":"public",
