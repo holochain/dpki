@@ -4,8 +4,13 @@ File for library of Methods
 // TODO This function will be used by the other application's
 //  by passing a public_key of the users they want to verify (i.e if he exist in the DHT of the DPKI)
 
+function genesis(){
+  return true
+}
+
 function bridgeGenesis()
 {
+  debug("HI")
   return true;
 }
 
@@ -36,6 +41,7 @@ function receive(from, arg)
 }
 
 function registerDpkiTo(app_agent_id){
+  debug("Reached....registerDpkiTo")
   z=commit("app_agent_id_link", {Links:[{Base:App.Agent.Hash,Link:app_agent_id,Tag:"app_agent_id"}]});
   debug(z)
   debug("app_agent_id_link: "+JSON.stringify(getLink(App.Agent.Hash,"app_agent_id",{Load:true})));
@@ -45,31 +51,44 @@ function registerDpkiTo(app_agent_id){
 }
 
 function registerDpkiKeyTo(app_agent_id){
+  debug("Reached....")
   keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
   debug(keyRegistration)
-  if (isErr(keyRegistration)) {return false}
+  if (isErr(keyRegistration)) {
+    debug("isErr false")
+    return false}
   if (keyRegistration != undefined) {
+    debug("undefined")
   keyRegistrationHash=makeHash(keyRegistration.Links[0].E)
   debug("MAKE HASH : ----->"+keyRegistrationHash)
   z=commit("app_agent_id_link", {Links:[{Base:app_agent_id,Link:keyRegistrationHash,Tag:"app_agent_register"}]});
   debug(z)
   debug("app_agent_id_link: "+JSON.stringify(getLink(app_agent_id,"app_agent_register",{Load:true})));
   a=getLink(app_agent_id,"app_agent_register",{Load:true})
+  debug("true")
   return true
 }
+debug("false")
 return false
 }
 
 function hasRegisteredKey(app_agent_id){
+  debug("Reached....")
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
-  if (isErr(key)) {return false}
+  debug(key)
+  if (isErr(key)) {
+  debug("returning false")
+    return false}
   if (key != undefined) {
+    debug("returning true")
   return true
   }
+  debug("returning false")
   return false
 }
 
 function verifyUser(app_agent_id){
+  debug("Reached....")
   var sources = get(app_agent_id,{GetMask:HC.GetMask.Sources});
   debug("Sources of the app_agent: "+sources)
   if (isErr(sources)) {sources = [];}
@@ -82,8 +101,13 @@ function verifyUser(app_agent_id){
 
 
 function getUserDetails(app_agent_id){
+  debug("Reached....")
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
-  if (isErr(key)) {return false}
+
+  debug("key = "+key)
+  if (isErr(key)) {
+    debug("returning false")
+    return false}
   if (key != undefined) {
     source=JSON.parse(key.Links[0].E)
     a=getLink(source.perm_dpki_id,"users",{Load:true})
@@ -94,9 +118,11 @@ function getUserDetails(app_agent_id){
     address : userDetails.address,
     email : userDetails.email
     }
-    debug(arg);
+    debug("Arg: "+arg);
+
     return JSON.stringify(arg)
   }
+  debug("returning false")
 return false
 }
 /*

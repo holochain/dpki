@@ -6,6 +6,7 @@ function genesis(){
   //  revocation();
   //  debug("==============THIS IS THE SECOND DEBUG==================");
   //  revocation("joash");
+  return true
 }
 
 function revocation(arg,nUserList){
@@ -35,13 +36,11 @@ function isRegistered() {
 }
 
 function getRevocationKeyLink(){
-  debug("ENTERED: getRevocationKeyLink")
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
 //  keyRegistration=JSON.parse(key.Links[0].E);
   return key.Links[0].H;
 }
 function getRevocationKey(){
-  debug("ENTERED: getRevocationKey")
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
   keyRegistration=JSON.parse(key.Links[0].E);
   return keyRegistration
@@ -81,7 +80,7 @@ debug("++++++++Call revokeKeyMN+++++++")
 
 
 function revokeKeySelf(revocationKey){
-0//  debug("++++++++Call revokeKeySelf+++++++")
+//  debug("++++++++Call revokeKeySelf+++++++")
   official_revocationKey=makeHash(revocationKey);
   user_revocationKey=official_revocationKey; //TODO get key from user the user_revocationKey.
   if(user_revocationKey!=official_revocationKey){
