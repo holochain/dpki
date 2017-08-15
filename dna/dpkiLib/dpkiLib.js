@@ -8,87 +8,57 @@ function genesis(){
   return true
 }
 
-function bridgeGenesis()
+function bridgeGenesis(side,dna,appData)
 {
-  debug("HI")
+  debug("Entered DPKI bridgeGenesis")
   return true;
 }
 
-function receive(from, arg)
-{
-  //registeres the user to the dpki during genesis
-  if(arg.type == "registerDpkiTo")
-  {
-    var val=registerDpkiTo(arg.app_agent_id)
-  }
-  //user has to register him self to the key in the DPKI
-  else if(arg.type == "registerDpkiKeyTo")
-  {
-    var val=registerDpkiKeyTo(arg.app_agent_id)
-  }
-  //Checks is the agent has registered key in the DPKI and register's the key
-  else if(arg.type == "hasRegisteredKey")
-  {
-    var val = hasRegisteredKey(arg.app_agent_id)
-  }
-  //This would give you the user details if hes registered and false is he's not registered
-  else if(arg.type == "getUserDetails")
-  {
-    var val=getUserDetails(arg.app_agent_id)
-  }
-
-  return val;
-}
-
 function registerDpkiTo(app_agent_id){
-  debug("Reached....registerDpkiTo")
   z=commit("app_agent_id_link", {Links:[{Base:App.Agent.Hash,Link:app_agent_id,Tag:"app_agent_id"}]});
-  debug(z)
   debug("app_agent_id_link: "+JSON.stringify(getLink(App.Agent.Hash,"app_agent_id",{Load:true})));
-  a=getLink(App.Agent.Hash,"app_agent_id",{Load:true})
-  return true
+  if (z != undefined) {
+    debug("Returning : true")
+    return true
+  }
+  else {
+    debug("Returning : false")
+    return false
+  }
 
 }
 
 function registerDpkiKeyTo(app_agent_id){
-  debug("Reached....")
   keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
-  debug(keyRegistration)
   if (isErr(keyRegistration)) {
-    debug("isErr false")
+    debug("ERROR : isErr false")
     return false}
   if (keyRegistration != undefined) {
-    debug("undefined")
   keyRegistrationHash=makeHash(keyRegistration.Links[0].E)
-  debug("MAKE HASH : ----->"+keyRegistrationHash)
   z=commit("app_agent_id_link", {Links:[{Base:app_agent_id,Link:keyRegistrationHash,Tag:"app_agent_register"}]});
-  debug(z)
   debug("app_agent_id_link: "+JSON.stringify(getLink(app_agent_id,"app_agent_register",{Load:true})));
   a=getLink(app_agent_id,"app_agent_register",{Load:true})
-  debug("true")
+  debug("Returning : true")
   return true
 }
-debug("false")
+debug("Returning : false")
 return false
 }
 
 function hasRegisteredKey(app_agent_id){
-  debug("Reached....")
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
-  debug(key)
   if (isErr(key)) {
-  debug("returning false")
+  debug("Returning : false")
     return false}
   if (key != undefined) {
-    debug("returning true")
+    debug("Returning : true")
   return true
   }
-  debug("returning false")
+  debug("Returning :  false")
   return false
 }
 
 function verifyUser(app_agent_id){
-  debug("Reached....")
   var sources = get(app_agent_id,{GetMask:HC.GetMask.Sources});
   debug("Sources of the app_agent: "+sources)
   if (isErr(sources)) {sources = [];}
@@ -101,12 +71,8 @@ function verifyUser(app_agent_id){
 
 
 function getUserDetails(app_agent_id){
-  debug("Reached....")
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
-
-  debug("key = "+key)
   if (isErr(key)) {
-    debug("returning false")
     return false}
   if (key != undefined) {
     source=JSON.parse(key.Links[0].E)
@@ -118,11 +84,9 @@ function getUserDetails(app_agent_id){
     address : userDetails.address,
     email : userDetails.email
     }
-    debug("Arg: "+arg);
-
+    debug("returning : "+JSON.stringify(arg))
     return JSON.stringify(arg)
   }
-  debug("returning false")
 return false
 }
 /*
