@@ -30,6 +30,7 @@ function registerDpkiTo(app_agent_id){
 
 function registerDpkiKeyTo(app_agent_id){
   keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
+  debug("keyRegistration: "+keyRegistration)
   if (isErr(keyRegistration)) {
     debug("ERROR : isErr false")
     return false}
@@ -47,8 +48,9 @@ return false
 
 function hasRegisteredKey(app_agent_id){
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
+  debug("key: "+key)
   if (isErr(key)) {
-  debug("Returning : false")
+  debug("ERROR isErr : false")
     return false}
   if (key != undefined) {
     debug("Returning : true")
@@ -72,7 +74,9 @@ function verifyUser(app_agent_id){
 
 function getUserDetails(app_agent_id){
   key=getLink(app_agent_id,"app_agent_register",{Load:true})
+  debug("key: "+key)
   if (isErr(key)) {
+    debug("ERROR isErr : false")
     return false}
   if (key != undefined) {
     source=JSON.parse(key.Links[0].E)
@@ -87,6 +91,7 @@ function getUserDetails(app_agent_id){
     debug("returning : "+JSON.stringify(arg))
     return JSON.stringify(arg)
   }
+debug("Returning :  false")
 return false
 }
 /*
