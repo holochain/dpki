@@ -1,8 +1,8 @@
 function genesis(){
-//TODO remove this for the app to works
-//JUST FOR TESTING THE HOLOCHAT APP
-  arg={username:"Jack",email:"jackT@hammer.com",address:"123 Moraga St",revocation_method:"1"};
-  keyRegistrationCreate(arg);
+/*TODO remove this for the app to works
+JUST FOR TESTING THE HOLOCHAT APP*/
+//  arg={username:"Jack",email:"jackT@hammer.com",address:"123 Moraga St",revocation_method:"1"};
+//  keyRegistrationCreate(arg);
   return true;
 }
 
