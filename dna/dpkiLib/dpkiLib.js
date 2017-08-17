@@ -94,19 +94,6 @@ function getUserDetails(app_agent_id){
 debug("Returning :  false")
 return false
 }
-/*
-//This is just going to check if the userAddress that was given actually exits
-function getAgent(app_agent_id) {
-    var sources = get(app_agent_id,{GetMask:HC.GetMask.Sources});
-    debug("Sources of the app_agent: "+sources)
-    if (isErr(sources)) {sources = [];}
-    if (sources != undefined) {
-        var n = sources.length -1;
-        return (n >= 0) ? sources[n] : "";
-    }
-    return "";
-}
-*/
 function isErr(result) {
     return ((typeof result === 'object') && result.name == "HolochainError");
   }

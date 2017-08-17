@@ -37,8 +37,7 @@ function isRegistered() {
 
 function getRevocationKeyLink(){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-//  keyRegistration=JSON.parse(key.Links[0].E);
-  return key.Links[0].H;
+/  return key.Links[0].H;
 }
 function getRevocationKey(){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
@@ -57,10 +56,6 @@ if(choice=="1"){
   }
   else{return false}
 test=  revokeKeySelf(revocationKey);
-/*  debug("App.Agent.Hash="+App.Agent.Hash)
-  debug("App.AgentTop.Hash="+App.Agent.TopHash)
-  debug("App.Key.Hash="+App.Key.Hash)
-  */
 }
 else if(choice=="2"){
 test=  revokeKeyMN(revocationKey,nUserList)
@@ -87,15 +82,9 @@ function revokeKeySelf(revocationKey){
     debug("**ERROR: Revocation Key Does'nt match**")
     return false
   }else{
-    //revoked_key=getMeKey();
-  //  revoked_key=App.Agent.Hash;
     old_Agent_TopHash=App.Agent.TopHash;
-
-    //debug("revoked_key="+revoked_key)
-    //debug("UpdateAgent called")
-    updateAgent({Revocation:"revoked this key"});
+  updateAgent({Revocation:"revoked this key"});
 //the identity can be used if we want to update the key.hash only
-//updateAgent({Identity:identity});
     new_Agent_TopHash=App.Agent.TopHash;
 }
 
