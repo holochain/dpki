@@ -35,7 +35,7 @@
 
           },
           {
-            "Name": "users_directory_link",
+            "Name": "users_me_link",
             "DataFormat": "links"
           }
         ],
@@ -44,6 +44,11 @@
           {
             "Name": "usersCreate",
             "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "usersUpdateDetails",
+            "CallingType": "json",
             "Exposure": "public"
 
           },
@@ -104,10 +109,44 @@
               {
                 "Name": "user_keyRegistration_link",
                 "DataFormat": "links"
+              },
+              {
+                "Name": "nUserList",
+                "DataFormat": "json",
+                "Sharing": "public",
+                "SchemaFile": "nUserList.json"
+
+              },
+              {
+                "Name": "user_nlist_link",
+                "DataFormat": "links"
               }
             ],
 
             "Functions": [
+              {
+                "Name": "keyRegistrationCreateMN",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },{
+                "Name": "getKeySigned",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "getAgent",
+                "CallingType": "string",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "saveUsersList",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
               {
                 "Name": "keyRegistrationCreate",
                 "CallingType": "json",
@@ -116,7 +155,7 @@
               },
               {
                 "Name": "keyRegistrationUpdate",
-                "CallingType": "string",
+                "CallingType": "json",
                 "Exposure": "public"
 
               },
@@ -172,16 +211,23 @@
       "Functions": [
         {
           "Name": "revocation",
-          "CallingType": "string",
+          "CallingType": "json",
           "Exposure": "public"
 
         },{
           "Name": "regenUser",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "getRevocationKeyLink",
           "CallingType": "string",
           "Exposure": "public"
 
-        },{
-          "Name": "getKeyRegistrationLink",
+        },
+        {
+          "Name": "getRevocationKey",
           "CallingType": "string",
           "Exposure": "public"
 
@@ -316,22 +362,49 @@
 
     },{
 
-        "Name": "hclib",
-
+        "Name": "dpkiLib",
         "Description": "This is used as a lib",
-
         "RibosomeType": "js",
-
-        "CodeFile": "hclib.js",
-
+        "CodeFile": "dpkiLib.js",
+        "BridgeFuncs": ["hasRegisteredKey","registerDpkiTo","getUserDetails","registerDpkiKeyTo"],
         "Entries": [
+          {
+            "Name": "app_agent_id",
+            "DataFormat": "string",
+            "Sharing": "public"
+          },
+          {
+            "Name": "app_agent_id_link",
+            "DataFormat": "links",
+            "Sharing": "public"
 
+          }
         ],
 
         "Functions": [
           {
-            "Name": "doGet",
-            "CallingType": "json",
+            "Name": "verifyUser",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "hasRegisteredKey",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "registerDpkiTo",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "getUserDetails",
+            "CallingType": "string",
+            "Exposure": "public"
+
+          },{
+            "Name": "registerDpkiKeyTo",
+            "CallingType": "string",
             "Exposure": "public"
 
           }

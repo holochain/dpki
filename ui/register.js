@@ -1,4 +1,3 @@
-
 function checkInputs(){
   var arg = {
     username: $("#name").val(),
@@ -25,10 +24,14 @@ function doRegister(arg){
       $.post("/fn/keyRegistration/isRegistered", "",
           function(registered) {
               console.log('registered: '+registered)
-              if(JSON.parse(registered)) {
-                $('#registerDialog').modal('hide');
+              if(!JSON.parse(registered)){
+                modal.style.display = "block";
               } else {
-                $('#registerDialog').modal('show');
+                $.post("/fn/revocation/getRevocationKeyLink", "",
+                function(key) {
+                alert("Save this key if you selected the Self-Revocation\n"+"Key : "+key);
+                });
+                //alert("You have Succesfully Registered");
               }
           });
     },
