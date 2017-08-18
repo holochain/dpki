@@ -1,11 +1,4 @@
 function genesis(){
-  /*
-  This is called in genesis just for testing
-  Later once the UI is done it will be called when the user wants to revke his key
-  */
-  //  revocation();
-  //  debug("==============THIS IS THE SECOND DEBUG==================");
-  //  revocation("joash");
   return true
 }
 
@@ -37,7 +30,6 @@ function isRegistered() {
 
 function getRevocationKeyLink(){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-//  keyRegistration=JSON.parse(key.Links[0].E);
   return key.Links[0].H;
 }
 function getRevocationKey(){
@@ -47,7 +39,6 @@ function getRevocationKey(){
 }
 function callRevocaiton(arg,nUserList){
 // Depending on the choice that was made for the Revocation Method that has to be formed
-
 revocationKey=getRevocationKey();
 choice=keyRegistration.revocation_Method_ID
 
@@ -57,10 +48,6 @@ if(choice=="1"){
   }
   else{return false}
 test=  revokeKeySelf(revocationKey);
-/*  debug("App.Agent.Hash="+App.Agent.Hash)
-  debug("App.AgentTop.Hash="+App.Agent.TopHash)
-  debug("App.Key.Hash="+App.Key.Hash)
-  */
 }
 else if(choice=="2"){
 test=  revokeKeyMN(revocationKey,nUserList)
@@ -80,27 +67,19 @@ debug("++++++++Call revokeKeyMN+++++++")
 
 
 function revokeKeySelf(revocationKey){
-//  debug("++++++++Call revokeKeySelf+++++++")
   official_revocationKey=makeHash(revocationKey);
   user_revocationKey=official_revocationKey; //TODO get key from user the user_revocationKey.
   if(user_revocationKey!=official_revocationKey){
     debug("**ERROR: Revocation Key Does'nt match**")
     return false
   }else{
-    //revoked_key=getMeKey();
-  //  revoked_key=App.Agent.Hash;
     old_Agent_TopHash=App.Agent.TopHash;
-
-    //debug("revoked_key="+revoked_key)
-    //debug("UpdateAgent called")
     updateAgent({Revocation:"revoked this key"});
 //the identity can be used if we want to update the key.hash only
-//updateAgent({Identity:identity});
     new_Agent_TopHash=App.Agent.TopHash;
 }
 
 return  checkUpdate(old_Agent_TopHash,new_Agent_TopHash);
-//  debug("++++++++Revocation key Completed++++++++++");
 }
 
 function checkUpdate(old_Agent_TopHash,new_Agent_TopHash){
@@ -117,10 +96,8 @@ Funtion user to re-generate the user that just revorked his old keys
 */
 
 function regenUser(arg){
-//  debug("Enter the regenUser");
 
   call("users","usersUpdateDetails",arg);
-//  debug("Calling keyRegistration for regen");
   call("keyRegistration","keyRegistrationUpdate",arg);
 }
 

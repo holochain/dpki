@@ -1,16 +1,10 @@
 function genesis(){
   usersCreate();
-  /*var public_key = get(App.Key.Hash,{GetMask:HC.GetMask.All});
-  var public_key_all = get(App.Agent.Hash,{GetMask:HC.GetMask.All});
-  debug(public_key)
-  debug(public_key_all)
-*/
   return true;
 }
 function usersCreate(){
   debug("Creating the user");
   user={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String};
-  //debug("user="+user);
   directory=getDirectory();
   me=getMeAgent();
   users=commit("users",user);
