@@ -5,6 +5,7 @@
 "UUID": "aee5cc40-8c58-4331-8125-fda7e3b61ccc",
 
 "Name": "DPKI",
+"RequiresVersion": 15,
 "Properties": {
   "description": "Distributed Public Key Infrastructure which runs on holochain",
   "language": "en",
@@ -125,6 +126,18 @@
 
             "Functions": [
               {
+                "Name": "keyRegistrationCreate",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
+                "Name": "keyRegistrationCreateSelf",
+                "CallingType": "json",
+                "Exposure": "public"
+
+              },
+              {
                 "Name": "keyRegistrationCreateMN",
                 "CallingType": "json",
                 "Exposure": "public"
@@ -143,12 +156,6 @@
               },
               {
                 "Name": "saveUsersList",
-                "CallingType": "json",
-                "Exposure": "public"
-
-              },
-              {
-                "Name": "keyRegistrationCreate",
                 "CallingType": "json",
                 "Exposure": "public"
 
