@@ -1,8 +1,4 @@
 function genesis(){
-/*TODO remove this for the app to works
-JUST FOR TESTING THE HOLOCHAT APP*/
-//  arg={username:"Jack",email:"jackT@hammer.com",address:"123 Moraga St",revocation_method:"1"};
-//  keyRegistrationCreate(arg);
   return true;
 }
 
@@ -18,7 +14,7 @@ function keyRegistrationCreate(arg){
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
-//Revocation Key can be used for further work from here
+///Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
 //return for the testing the function
 return a.Links[0].E;

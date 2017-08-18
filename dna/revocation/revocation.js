@@ -1,11 +1,4 @@
 function genesis(){
-  /*
-  This is called in genesis just for testing
-  Later once the UI is done it will be called when the user wants to revke his key
-  */
-  //  revocation();
-  //  debug("==============THIS IS THE SECOND DEBUG==================");
-  //  revocation("joash");
   return true
 }
 
@@ -37,7 +30,7 @@ function isRegistered() {
 
 function getRevocationKeyLink(){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-/  return key.Links[0].H;
+  return key.Links[0].H;
 }
 function getRevocationKey(){
   key=getLink(getMeAgent(),"keyRegistration",{Load:true});
@@ -106,10 +99,7 @@ Funtion user to re-generate the user that just revorked his old keys
 */
 
 function regenUser(arg){
-//  debug("Enter the regenUser");
-
   call("users","usersUpdateDetails",arg);
-//  debug("Calling keyRegistration for regen");
   call("keyRegistration","keyRegistrationUpdate",arg);
 }
 
