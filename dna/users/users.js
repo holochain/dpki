@@ -1,5 +1,10 @@
 function genesis(){
   usersCreate();
+  /*var public_key = get(App.Key.Hash,{GetMask:HC.GetMask.All});
+  var public_key_all = get(App.Agent.Hash,{GetMask:HC.GetMask.All});
+  debug(public_key)
+  debug(public_key_all)
+*/
   return true;
 }
 function usersCreate(){

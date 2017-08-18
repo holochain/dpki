@@ -1,4 +1,8 @@
 function genesis(){
+/*TODO remove this for the app to works
+JUST FOR TESTING THE HOLOCHAT APP*/
+//  arg={username:"Jack",email:"jackT@hammer.com",address:"123 Moraga St",revocation_method:"1"};
+//  keyRegistrationCreate(arg);
   return true;
 }
 
@@ -14,12 +18,89 @@ function keyRegistrationCreate(arg){
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
-///Revocation Key can be used for further work from here
+//commit the user list too.
+/*TODO CODE for MN
+if(revocation_Method_ID==2){
+  key={keyRegistration:keyRegistration,
+  n_user_list:n_user_list}
+  debug(JSON.stringify(key))
+keyRegistrationCreateMN(keyRegistration,n_user_list)
+}
+*/
+//Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
 //return for the testing the function
 return a.Links[0].E;
 }
 
+/*TODO CODE for MN
+function keyRegistrationCreateMN(key){
+
+  keyRegistration=key.keyRegistration;
+  n_user_list=key.n_user_list;
+  if(!saveUsersList(n_user_list)){
+    return false
+  }
+  else {
+    //TODO Decided what has to be signed ??
+    test=getKeySigned(key);
+return test
+  }
+}
+
+function getKeySigned(key){
+  keyRegistration=key.keyRegistration;
+  n_user_list=key.n_user_list;
+  reply1=send(getAgent(n_user_list.un1),keyRegistration)
+  reply2=send(getAgent(n_user_list.un2),keyRegistration)
+  reply3=send(getAgent(n_user_list.un3),keyRegistration)
+  reply4=send(getAgent(n_user_list.un4),keyRegistration)
+
+reply={reply1:reply1,reply2:reply2,reply3:reply3,reply4:reply4}
+
+return reply
+}
+
+
+//TODO This is the code that is recived by the N users who has to decide to sign the key
+function receive(from,keyRegistration){
+  debug("Recived the message"+keyRegistration);
+//  ret=sign()
+  //return ret
+  return true
+}
+
+//TODO here we verify the signature of the N people who sign
+function verifySig(signature,data,public_key){
+  var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
+  debug(public_key.C)
+  //pass=verifySignature(signature,data,public_key)
+  if(!verifySignature(signature,data,public_key)){
+    return false
+  }
+  else{
+    return true
+  }
+}
+
+//Create a list of users using their perm_dpki_id
+function saveUsersList(n_user_list){
+  me=getMeAgent();
+  debug(JSON.stringify(n_user_list))
+//Check if user list is valid
+  if(!getAgent(n_user_list.un1)||!getAgent(n_user_list.un2)||!getAgent(n_user_list.un3)||!getAgent(n_user_list.un4))
+  {
+    return false
+  }
+  key=commit("nUserList",n_user_list);
+  debug(key);
+  commit("user_nlist_link", {Links:[{Base:me,Link:key,Tag:"nUserList"}]});
+  debug("user_nlist_link: "+JSON.stringify(getLink(me,"nUserList",{Load:true})));
+test=getLink(me,"nUserList",{Load:false});
+return test.Links[0].H
+}
+
+*/
 
 //This is just going to check if the userAddress that was given actually exits
 function getAgent(handleHash) {
@@ -52,6 +133,17 @@ function isRegistered() {
     return false;
 }
 
+
+/*
+function selectRevocationMethod(){
+  // This is a multiple choice in the UI. return the choice that the  user makes
+  // 1 = Revocation Key
+  // 2 = M of N Revocation
+  // 3 = Revocation Athority
+  choice="1";
+  return choice;
+}
+*/
 function keyRegistrationUpdate(arg){
   debug("++++Update key Registration+++++")
   //me=revoked_key;
@@ -67,6 +159,10 @@ debug(arg.username)
   /*Done because the same vause is not replaced in the DHT wheich gives an ERROR*/
   //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
     new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method};
+  /*  debug("App.Agent.Hash="+App.Agent.Hash)
+    debug("App.AgentTop.Hash="+App.Agent.TopHash)
+    debug("App.Key.Hash="+App.Key.Hash)
+  */
   var key = update("keyRegistration",new_keyRegistration,oldKey);
   debug(new_keyRegistration+" is "+key);
   commit("user_keyRegistration_link",
