@@ -50,7 +50,7 @@ function keyRegistrationCreateMN(arg,n_user_list){
   debug("revocationKey is ="+ makeHash(keyRegistration));
 
   //commit the user list too.
-    key={keyRegistration:keyRegistration,
+    key={keyRegistration:makeHash(keyRegistration),
     n_user_list:n_user_list}
     debug("Key : "+JSON.stringify(key))
 
@@ -69,29 +69,57 @@ function keyRegistrationCreateMN(arg,n_user_list){
 function getKeySigned(key){
   keyRegistration=key.keyRegistration;
   n_user_list=key.n_user_list;
+  //user 1
   reply1=send(getAgent(n_user_list.un1),keyRegistration)
+//user 2
   reply2=send(getAgent(n_user_list.un2),keyRegistration)
+//user 3
   reply3=send(getAgent(n_user_list.un3),keyRegistration)
+//user 4
   reply4=send(getAgent(n_user_list.un4),keyRegistration)
 
-reply={reply1:reply1,reply2:reply2,reply3:reply3,reply4:reply4}
+//TODO This has to wait for all the replys to come. and then proceed
+if(!reply1||!reply2||!reply3||!reply4){
+  ret=false
+}else{
+  user_signed_details =[{keyRegistration:keyRegistration},{signed:reply1,agent_id:n_user_list.un1},
+    {signed:reply2,agent_id:n_user_list.un2},
+    {signed:reply3,agent_id:n_user_list.un3},
+    {signed:reply4,agent_id:n_user_list.un4}]
+    ret = commitSignedDetails(user_signed_details)
+}
 
-return reply
+return ret
+}
+
+function commitSignedDetails(user_signed_details){
+
+  //Commiting all the signed keys
+    key=commit("user_signed_details",JSON.stringify(user_signed_details));
+    commit("user_signed_details_link", {Links:[{Base:getMeAgent(),Link:key,Tag:"user_signed_details"}]});
+  //debug("user_signed_details_link: "+JSON.stringify(getLink(getMeAgent(),"user_signed_details",{Load:true})));
+  a=getLink(getMeAgent(),"user_signed_details",{Load:true});
+  return a.Links[0].H
 }
 
 
-//TODO This is the code that is recived by the N users who has to decide to sign the key
-function receive(from,keyRegistration){
-  debug("Recived the message"+keyRegistration);
-//  ret=sign()
-  //return ret
-  return true
+function verifySigOfList(){
+
+  a=getLink(getMeAgent(),"user_signed_details",{Load:true});
+  signed_details=JSON.parse(a.Links[0].E)
+    vr1=verifySig(signed_details[1].signed,signed_details[0].keyRegistration,getAgent(signed_details[1].agent_id))
+    vr2=verifySig(signed_details[2].signed,signed_details[0].keyRegistration,getAgent(signed_details[2].agent_id))
+    vr3=verifySig(signed_details[3].signed,signed_details[0].keyRegistration,getAgent(signed_details[3].agent_id))
+    vr4=verifySig(signed_details[4].signed,signed_details[0].keyRegistration,getAgent(signed_details[4].agent_id))
+    vr={vr1:vr1,vr2:vr2,vr3:vr3,vr4:vr4}
+return JSON.stringify(vr)
 }
+
 //TODO  NOT DONE YET
 //TODO here we verify the signature of the N people who sign
-function verifySig(signature,data,public_key){
+function verifySig(signature,data,public_key_Hash){
   var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
-  debug(public_key.C)
+//  debug(public_key)
   //pass=verifySignature(signature,data,public_key)
   if(!verifySignature(signature,data,public_key)){
     return false
@@ -100,6 +128,21 @@ function verifySig(signature,data,public_key){
     return true
   }
 }
+
+
+//This is the code that is recived by the N users who has to decide to sign the key
+function receive(from,keyRegistration){
+  //TODO give the user the option to choose if he wants to sign
+  signed=signFriendsKey(keyRegistration)
+//  debug("Signed message"+signed);
+  return signed
+}
+
+function signFriendsKey(keyRegistration){
+  signed=sign(keyRegistration)
+  return signed
+}
+
 
 //Create a list of users using their perm_dpki_id
 function saveUsersList(n_user_list){
@@ -120,23 +163,6 @@ return test.Links[0].H
 }
 ////////////////////////////////////////////
 
-//This is just going to check if the userAddress that was given actually exits
-// return the source i.e the public_key if it exists else false
-function getAgent(handleHash) {
-    var directory = getDirectory();
-  //  var handleHash = makeHash(handle);
-    var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
-debug("Sources: "+sources)
-    if (isErr(sources)) {sources = [];}
-    if (sources != undefined) {
-        var n = sources.length -1;
-        return (n >= 0) ? sources[n] : false;
-    }
-    return false;
-}
-
-
-
 function isRegistered() {
   me=getMeAgent();
     var registered_users_key = getLink(me, "keyRegistration",{Load:true})
@@ -152,17 +178,6 @@ function isRegistered() {
     return false;
 }
 
-
-/*
-function selectRevocationMethod(){
-  // This is a multiple choice in the UI. return the choice that the  user makes
-  // 1 = Revocation Key
-  // 2 = M of N Revocation
-  // 3 = Revocation Athority
-  choice="1";
-  return choice;
-}
-*/
 function keyRegistrationUpdate(arg){
   debug("++++Update key Registration+++++")
   //me=revoked_key;
@@ -229,6 +244,24 @@ return true;
 function getDirectory() {return App.DNA.Hash;}
   function getMeKey() {return App.Key.Hash;}
 function getMeAgent(){return App.Agent.Hash;}
+
+
+//This is just going to check if the userAddress that was given actually exits
+// return the source i.e the public_key if it exists else false
+function getAgent(handleHash) {
+    var directory = getDirectory();
+  //  var handleHash = makeHash(handle);
+    var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
+debug("Sources: "+sources)
+    if (isErr(sources)) {sources = [];}
+    if (sources != undefined) {
+        var n = sources.length -1;
+        return (n >= 0) ? sources[n] : false;
+    }
+    return false;
+}
+
+
 // ===============================================================================
 //   VALIDATION functions
 // ===============================================================================

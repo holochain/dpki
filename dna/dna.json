@@ -121,6 +121,15 @@
               {
                 "Name": "user_nlist_link",
                 "DataFormat": "links"
+              },
+              {
+                "Name": "user_signed_details",
+                "DataFormat": "string",
+                "Sharing": "public"
+              },
+              {
+                "Name": "user_signed_details_link",
+                "DataFormat": "links"
               }
             ],
 
@@ -183,6 +192,26 @@
                 "CallingType": "json",
                 "Exposure": "public"
 
+              },
+              {
+                "Name": "verifySigOfList",
+                "CallingType": "json",
+                "Exposure": "public"
+              },
+              {
+                "Name": "commitSignedDetails",
+                "CallingType": "json",
+                "Exposure": "public"
+              },
+              {
+                "Name": "verifySig",
+                "CallingType": "string",
+                "Exposure": "public"
+              },
+              {
+                "Name": "signFriendsKey",
+                "CallingType": "json",
+                "Exposure": "public"
               }
             ]
 

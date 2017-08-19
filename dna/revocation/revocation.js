@@ -54,9 +54,9 @@ choice=keyRegistration.revocation_Method_ID
 if(choice=="1"){
   if(arg.revocationKey==getRevocationKeyLink()){
     debug("Revoaction key Verified")
+  test=  revokeKeySelf(revocationKey);
   }
   else{return false}
-test=  revokeKeySelf(revocationKey);
 /*  debug("App.Agent.Hash="+App.Agent.Hash)
   debug("App.AgentTop.Hash="+App.Agent.TopHash)
   debug("App.Key.Hash="+App.Key.Hash)
