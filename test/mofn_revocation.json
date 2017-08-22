@@ -1,0 +1,73 @@
+[
+  {
+      "Convey":"Generating a the revocationKey for the user",
+      "Zome": "keyRegistration",
+      "FnName": "keyRegistrationCreate",
+      "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"2"},
+      "Output": "\"{\\\"perm_dpki_id\\\":\\\"Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV\\\",\\\"public_key\\\":\\\"QmPcpNj6dBz53SvJ8SexLJSvnzSysM8pf6dZFaJ7H6yN1U\\\",\\\"revocation_Method_ID\\\":\\\"2\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\"" ,
+      "Exposure":"public",
+      "Err": "",
+      "Regexp": ""
+  },
+  {
+        "Convey":"Make a list of the N Users that are provided by the user",
+        "Zome": "keyRegistration",
+        "FnName": "saveUsersList",
+        "Input" : {"un1":"%agent%","un2":"%agent%","un3":"%agent%","un4":"%agent%"},
+        "Output":"\"%h1%\"",
+        "Exposure":"public",
+        "Err": "",
+        "Regexp": ""
+    },
+      {
+          "Convey":"Checking if the User ID passed actuall exists",
+          "Zome": "keyRegistration",
+          "FnName": "getAgent",
+          "Input" : "%agent%",
+          "Output":"%key%",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+      },
+        {
+          "Convey":"Sending request to sign to other users",
+          "Zome": "revocation",
+          "FnName": "getKeySigned",
+          "Input" : "{\"n_user_list\":{\"un1\":\"%agent%\",\"un2\":\"%agent%\",\"un3\":\"%agent%\",\"un4\":\"%agent%\"},\"keyRegistration\":{\"username\":\"joel\"}}",
+          "Output":"\"%h1%\"",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+        },
+        {
+          "Convey":"Sending request to sign to other users",
+          "Zome": "revocation",
+          "FnName": "verifySigOfList",
+          "Input" : "",
+          "Output":"[true,true,true,true]",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+        }
+        ,
+        {
+          "Convey":"Sending request to sign to other users",
+          "Zome": "revocation",
+          "FnName": "verifyNumOfSig",
+          "Input" : "[true,true,true,false]",
+          "Output":"true",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+        },
+        {
+          "Convey":"Sending request to sign to other users",
+          "Zome": "revocation",
+          "FnName": "verifyNumOfSig",
+          "Input" : "[true,true,false,false]",
+          "Output":"\"UNSUCCESSFUL : No response from 2 users\"",
+          "Exposure":"public",
+          "Err": "",
+          "Regexp": ""
+        }
+]

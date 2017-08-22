@@ -23,7 +23,12 @@ function revoke(arg){
           if(!JSON.parse(registered)){
               alert("ERROR : Revocation Failed");
           } else {
-          alert("Revocation was Succesfull");
+            $.post("/fn/revocation/getRevocationKeyLink", "",
+            function(key) {
+            alert("Revocation was Succesfull , Save this key if you selected the Self-Revocation\n"+"Key : "+key);
+            });
+
+          //alert("Revocation was Succesfull");
           }
 
       }

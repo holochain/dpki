@@ -151,11 +151,6 @@
                 "CallingType": "json",
                 "Exposure": "public"
 
-              },{
-                "Name": "getKeySigned",
-                "CallingType": "json",
-                "Exposure": "public"
-
               },
               {
                 "Name": "getAgent",
@@ -192,26 +187,6 @@
                 "CallingType": "json",
                 "Exposure": "public"
 
-              },
-              {
-                "Name": "verifySigOfList",
-                "CallingType": "json",
-                "Exposure": "public"
-              },
-              {
-                "Name": "commitSignedDetails",
-                "CallingType": "json",
-                "Exposure": "public"
-              },
-              {
-                "Name": "verifySig",
-                "CallingType": "string",
-                "Exposure": "public"
-              },
-              {
-                "Name": "signFriendsKey",
-                "CallingType": "json",
-                "Exposure": "public"
               }
             ]
 
@@ -280,6 +255,47 @@
         },
         {
           "Name": "revokeKeyMN",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getKeySigned",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },{
+          "Name": "getUserList",
+          "CallingType": "json",
+          "Exposure": "public"
+
+        },
+        {
+          "Name": "verifySigOfList",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "commitSignedDetails",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "verifySig",
+          "CallingType": "string",
+          "Exposure": "public"
+        },
+        {
+          "Name": "signFriendsKey",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "verifyNumOfSig",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "revoke",
           "CallingType": "json",
           "Exposure": "public"
         },

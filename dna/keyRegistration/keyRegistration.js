@@ -6,11 +6,11 @@ JUST FOR TESTING THE HOLOCHAT APP*/
   return true;
 }
 
-function keyRegistrationCreate(arg,n_user_list){
+function keyRegistrationCreate(arg){
 if(arg.revocation_method==1){
   data=keyRegistrationCreateSelf(arg);
 }else if(arg.revocation_method==2){
-data=keyRegistrationCreateMN(arg,n_user_list);
+data=keyRegistrationCreateSelf(arg);
 }else if (arg.revocation_method==3) {
 
 }else return false
@@ -36,6 +36,7 @@ return a.Links[0].E;
 }
 
 //TODO CODE for MN
+/*
 function keyRegistrationCreateMN(arg,n_user_list){
   //update user details
   call("users","usersUpdateDetails",arg)
@@ -57,92 +58,15 @@ function keyRegistrationCreateMN(arg,n_user_list){
     if(!saveUsersList(n_user_list)){
       return false
     }
-    else {
+  /*  else {
       //TODO Decided what has to be signed ??
       test=getKeySigned(key);
       return test
     }
 
-
+return true
 }
-
-function getKeySigned(key){
-  keyRegistration=key.keyRegistration;
-  n_user_list=key.n_user_list;
-  //user 1
-  reply1=send(getAgent(n_user_list.un1),keyRegistration)
-//user 2
-  reply2=send(getAgent(n_user_list.un2),keyRegistration)
-//user 3
-  reply3=send(getAgent(n_user_list.un3),keyRegistration)
-//user 4
-  reply4=send(getAgent(n_user_list.un4),keyRegistration)
-
-//TODO This has to wait for all the replys to come. and then proceed
-if(!reply1||!reply2||!reply3||!reply4){
-  ret=false
-}else{
-  user_signed_details =[{keyRegistration:keyRegistration},{signed:reply1,agent_id:n_user_list.un1},
-    {signed:reply2,agent_id:n_user_list.un2},
-    {signed:reply3,agent_id:n_user_list.un3},
-    {signed:reply4,agent_id:n_user_list.un4}]
-    ret = commitSignedDetails(user_signed_details)
-}
-
-return ret
-}
-
-function commitSignedDetails(user_signed_details){
-
-  //Commiting all the signed keys
-    key=commit("user_signed_details",JSON.stringify(user_signed_details));
-    commit("user_signed_details_link", {Links:[{Base:getMeAgent(),Link:key,Tag:"user_signed_details"}]});
-  //debug("user_signed_details_link: "+JSON.stringify(getLink(getMeAgent(),"user_signed_details",{Load:true})));
-  a=getLink(getMeAgent(),"user_signed_details",{Load:true});
-  return a.Links[0].H
-}
-
-
-function verifySigOfList(){
-
-  a=getLink(getMeAgent(),"user_signed_details",{Load:true});
-  signed_details=JSON.parse(a.Links[0].E)
-    vr1=verifySig(signed_details[1].signed,signed_details[0].keyRegistration,getAgent(signed_details[1].agent_id))
-    vr2=verifySig(signed_details[2].signed,signed_details[0].keyRegistration,getAgent(signed_details[2].agent_id))
-    vr3=verifySig(signed_details[3].signed,signed_details[0].keyRegistration,getAgent(signed_details[3].agent_id))
-    vr4=verifySig(signed_details[4].signed,signed_details[0].keyRegistration,getAgent(signed_details[4].agent_id))
-    vr={vr1:vr1,vr2:vr2,vr3:vr3,vr4:vr4}
-return JSON.stringify(vr)
-}
-
-//TODO  NOT DONE YET
-//TODO here we verify the signature of the N people who sign
-function verifySig(signature,data,public_key_Hash){
-  var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
-//  debug(public_key)
-  //pass=verifySignature(signature,data,public_key)
-  if(!verifySignature(signature,data,public_key)){
-    return false
-  }
-  else{
-    return true
-  }
-}
-
-
-//This is the code that is recived by the N users who has to decide to sign the key
-function receive(from,keyRegistration){
-  //TODO give the user the option to choose if he wants to sign
-  signed=signFriendsKey(keyRegistration)
-//  debug("Signed message"+signed);
-  return signed
-}
-
-function signFriendsKey(keyRegistration){
-  signed=sign(keyRegistration)
-  return signed
-}
-
+*/
 
 //Create a list of users using their perm_dpki_id
 function saveUsersList(n_user_list){
@@ -210,26 +134,6 @@ debug(arg.username)
   return a.Links[0].H;
 }
 
-function doGetLink(base,tag) {
-    // get the tag from the base in the DHT
-    var links = getLink(base, tag,{Load:true});
-    if (isErr(links)) {
-        links = [];
-    }
-     else {
-        links = links.Links;
-    }
-    debug("Links:"+JSON.stringify(links));
-    var links_filled = [];
-    for (var i=0;i <links.length;i++) {
-        links_filled.push(links[i].H);
-    }
-    return links_filled;
-}
-function isErr(result) {
-    return ((typeof result === 'object') && result.name == "HolochainError");
-  }
-
 
   function keyRegistrationRead(){
   return true;
@@ -259,6 +163,26 @@ debug("Sources: "+sources)
         return (n >= 0) ? sources[n] : false;
     }
     return false;
+}
+function isErr(result) {
+    return ((typeof result === 'object') && result.name == "HolochainError");
+  }
+
+function doGetLink(base,tag) {
+    // get the tag from the base in the DHT
+    var links = getLink(base, tag,{Load:true});
+    if (isErr(links)) {
+        links = [];
+    }
+     else {
+        links = links.Links;
+    }
+    debug("Links:"+JSON.stringify(links));
+    var links_filled = [];
+    for (var i=0;i <links.length;i++) {
+        links_filled.push(links[i].H);
+    }
+    return links_filled;
 }
 
 
