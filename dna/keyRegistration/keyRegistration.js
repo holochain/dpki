@@ -12,18 +12,18 @@ function keyRegistrationCreate(arg){
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
-  debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
-  a=getLink(me,"keyRegistration",{Load:true});
+  debug("user_keyRegistration_link: "+JSON.stringify(getLinks(me,"keyRegistration",{Load:true})));
+  a=getLinks(me,"keyRegistration",{Load:true});
 //Revocation Key can be used for further work from here
-  debug("revocationKey is ="+ makeHash(keyRegistration));
+    debug("revocationKey is ="+ makeHash("keyRegistration",keyRegistration));
 //return for the testing the function
-return a.Links[0].E;
+return a[0].Entry;
 }
 
 //This is just going to check if the userAddress that was given actually exits
 function getAgent(handleHash) {
     var directory = getDirectory();
-  //  var handleHash = makeHash(handle);
+  //  var handleHash = makeHash("handle",handle);
     var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
 debug("Sources: "+sources)
     if (isErr(sources)) {sources = [];}
@@ -38,13 +38,12 @@ debug("Sources: "+sources)
 
 function isRegistered() {
   me=getMeAgent();
-    var registered_users_key = getLink(me, "keyRegistration",{Load:true})
+    var registered_users_key = getLinks(me, "keyRegistration",{Load:true})
     debug("Registered users are: "+JSON.stringify(registered_users_key));
     if( registered_users_key instanceof Error) return false
-    registered_users_key = registered_users_key.Links
     var agent_id = App.Key.Hash
     for(var i=0; i < registered_users_key.length; i++) {
-        var profile = JSON.parse(registered_users_key[i]["E"])
+        var profile = registered_users_key[i].Entry
         debug("Registered user key "+i+" is " + profile.shared_ID)
         if( profile.public_key == agent_id) return true;
     }
@@ -73,24 +72,21 @@ debug(arg.username)
              {Base:App.Agent.Hash,Link:key,Tag:"keyRegistration"}
          ]});
       }
-  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(App.Agent.Hash,"keyRegistration",{Load:true})));
-  a=getLink(App.Agent.Hash,"keyRegistration",{Load:true})
-  return a.Links[0].H;
+  debug("New_user_keyRegistration_link: "+JSON.stringify(getLinks(App.Agent.Hash,"keyRegistration",{Load:true})));
+  a=getLinks(App.Agent.Hash,"keyRegistration",{Load:true})
+  return a[0].Hash;
 }
 
 function doGetLink(base,tag) {
     // get the tag from the base in the DHT
-    var links = getLink(base, tag,{Load:true});
+    var links = getLinks(base, tag,{Load:true});
     if (isErr(links)) {
         links = [];
-    }
-     else {
-        links = links.Links;
     }
     debug("Links:"+JSON.stringify(links));
     var links_filled = [];
     for (var i=0;i <links.length;i++) {
-        links_filled.push(links[i].H);
+        links_filled.push(links[i].Hash);
     }
     return links_filled;
 }

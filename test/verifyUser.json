@@ -44,7 +44,7 @@
   "Zome": "keyRegistration",
   "FnName": "keyRegistrationCreate",
   "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
-  "Output": "\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\"" ,
+  "Output": "{\"perm_dpki_id\":\"%agent%\",\"public_key\":\"%key%\",\"revocation_Method_ID\":\"1\",\"shared_ID\":\"Jack\"}" ,
   "Exposure":"public",
   "Err": "",
   "Regexp": ""
@@ -74,7 +74,7 @@
   "Zome": "dpkiLib",
   "FnName": "getUserDetails",
   "Input" : "%agent%",
-  "Output":"{\"address\":\"123 Moraga St\",\"email\":\"jackT@hammer.com\",\"key\":\"{\\\"perm_dpki_id\\\":\\\"%agent%\\\",\\\"public_key\\\":\\\"%key%\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"Jack\\\"}\",\"shared_ID\":\"Jack\"}",
+  "Output":"{\"address\":\"123 Moraga St\",\"email\":\"jackT@hammer.com\",\"key\":{\"perm_dpki_id\":\"%agent%\",\"public_key\":\"%key%\",\"revocation_Method_ID\":\"1\",\"shared_ID\":\"Jack\"},\"shared_ID\":\"Jack\"}",
   "Exposure":"public",
   "Err": "",
   "Regexp": ""

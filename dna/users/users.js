@@ -9,14 +9,16 @@ function usersCreate(){
   me=getMeAgent();
   users=commit("users",user);
   commit("users_me_link", {Links:[{Base:me,Link:users,Tag:"users"}]});
-  debug("users_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
-  a=getLink(me,"users",{Load:true})
-  return a.Links[0].H;
+  debug("users_me_link: "+JSON.stringify(getLinks(me,"users",{Load:true})));
+  a=getLinks(me,"users",{Load:true})
+  return a[0].Hash;
 }
 
 function usersUpdateDetails(arg){
   debug("++++Update users Details+++++")
-  me=getMeAgent();
+    me=getMeAgent();
+    debug("me="+ JSON.stringify(me))
+
   var user = doGetLink(me,"users");
   var n = user.length - 1;
   debug("N="+n);
@@ -34,9 +36,9 @@ function usersUpdateDetails(arg){
              {Base:me,Link:key,Tag:"users"}
          ]});
       }
-  debug("New_user_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
-  a=getLink(me,"users",{Load:true});
-  return a.Links[0].H;
+  debug("New_user_me_link: "+JSON.stringify(getLinks(me,"users",{Load:true})));
+  a=getLinks(me,"users",{Load:true});
+  return a[0].Hash;
 }
 
 function usersUpdate(){
@@ -45,7 +47,9 @@ function usersUpdate(){
     debug("App.AgentTop.Hash="+App.Agent.TopHash)
     debug("App.Key.Hash="+App.Key.Hash)
 
-  me=getMeAgent();
+    me=getMeAgent();
+    debug("me="+ JSON.stringify(me))
+
   var user = doGetLink(me,"users");
   var n = user.length - 1;
   debug("N="+n);
@@ -62,9 +66,9 @@ function usersUpdate(){
              {Base:me,Link:key,Tag:"users"}
          ]});
       }
-  debug("New_user_me_link: "+JSON.stringify(getLink(me,"users",{Load:true})));
-  a=getLink(me,"users",{Load:true});
-  return a.Links[0].H;
+  debug("New_user_me_link: "+JSON.stringify(getLinks(me,"users",{Load:true})));
+  a=getLinks(me,"users",{Load:true});
+  return a[0].Hash;
 }
 
 
@@ -89,19 +93,16 @@ function getDirectory() {return App.DNA.Hash;}
 function getMePublic() {return App.Key.Hash;}
 function getMeAgent(){return App.Agent.Hash;}
 
-// helper function to call getLinks, handle the no links entry error, and build a simpler links array.
+// helper function to call getLinkss, handle the no links entry error, and build a simpler links array.
 function doGetLink(base,tag) {// get the tag from the base in the DHT
-    var links = getLink(base, tag,{Load:true});
+    var links = getLinks(base, tag,{Load:true});
     if (isErr(links)) {
         links = [];
-    }
-     else {
-        links = links.Links;
     }
     debug("Links:"+JSON.stringify(links));
     var links_filled = [];
     for (var i=0;i <links.length;i++) {
-        links_filled.push(links[i].H);
+        links_filled.push(links[i].Hash);
     }
     return links_filled;
 }

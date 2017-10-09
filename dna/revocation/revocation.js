@@ -15,13 +15,13 @@ function revocation(arg,nUserList){
 
 function isRegistered() {
   me=getMeAgent();
-    var registered_users_key = getLink(me, "keyRegistration",{Load:true})
+    var registered_users_key = getLinks(me, "keyRegistration",{Load:true})
     debug("Registered users are: "+JSON.stringify(registered_users_key));
     if( registered_users_key instanceof Error) return false
     registered_users_key = registered_users_key.Links
     var agent_id = App.Key.Hash
     for(var i=0; i < registered_users_key.length; i++) {
-        var profile = JSON.parse(registered_users_key[i]["E"])
+        var profile = registered_users_key[i].Entry
         debug("Registered user key "+i+" is " + profile.shared_ID)
         if( profile.public_key == agent_id) return true;
     }
@@ -29,12 +29,12 @@ function isRegistered() {
 }
 
 function getRevocationKeyLink(){
-  key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-  return key.Links[0].H;
+  key=getLinks(getMeAgent(),"keyRegistration",{Load:true});
+  return key[0].Hash;
 }
 function getRevocationKey(){
-  key=getLink(getMeAgent(),"keyRegistration",{Load:true});
-  keyRegistration=JSON.parse(key.Links[0].E);
+  key=getLinks(getMeAgent(),"keyRegistration",{Load:true});
+  keyRegistration=JSON.parse(key[0].Entry);
   return keyRegistration
 }
 function callRevocaiton(arg,nUserList){
@@ -67,7 +67,7 @@ debug("++++++++Call revokeKeyMN+++++++")
 
 
 function revokeKeySelf(revocationKey){
-  official_revocationKey=makeHash(revocationKey);
+    official_revocationKey=makeHash("keyRegistration",revocationKey);
   user_revocationKey=official_revocationKey; //TODO get key from user the user_revocationKey.
   if(user_revocationKey!=official_revocationKey){
     debug("**ERROR: Revocation Key Does'nt match**")

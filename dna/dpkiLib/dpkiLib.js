@@ -16,7 +16,7 @@ function bridgeGenesis(side,dna,appData)
 
 function registerDpkiTo(app_agent_id){
   z=commit("app_agent_id_link", {Links:[{Base:App.Agent.Hash,Link:app_agent_id,Tag:"app_agent_id"}]});
-  debug("app_agent_id_link: "+JSON.stringify(getLink(App.Agent.Hash,"app_agent_id",{Load:true})));
+  debug("app_agent_id_link: "+JSON.stringify(getLinks(App.Agent.Hash,"app_agent_id",{Load:true})));
   if (z != undefined) {
     debug("Returning : true")
     return true
@@ -29,15 +29,15 @@ function registerDpkiTo(app_agent_id){
 }
 
 function registerDpkiKeyTo(app_agent_id){
-  keyRegistration=getLink(App.Agent.Hash,"keyRegistration",{Load:true});
+  keyRegistration=getLinks(App.Agent.Hash,"keyRegistration",{Load:true});
   if (isErr(keyRegistration)) {
     debug("ERROR : isErr false")
     return false}
   if (keyRegistration != undefined) {
-  keyRegistrationHash=makeHash(keyRegistration.Links[0].E)
+      keyRegistrationHash=makeHash("keyRegistration",keyRegistration[0].Entry)
   z=commit("app_agent_id_link", {Links:[{Base:app_agent_id,Link:keyRegistrationHash,Tag:"app_agent_register"}]});
-  debug("app_agent_id_link: "+JSON.stringify(getLink(app_agent_id,"app_agent_register",{Load:true})));
-  a=getLink(app_agent_id,"app_agent_register",{Load:true})
+  debug("app_agent_id_link: "+JSON.stringify(getLinks(app_agent_id,"app_agent_register",{Load:true})));
+  a=getLinks(app_agent_id,"app_agent_register",{Load:true})
   debug("Returning : true")
   return true
 }
@@ -46,7 +46,7 @@ return false
 }
 
 function hasRegisteredKey(app_agent_id){
-  key=getLink(app_agent_id,"app_agent_register",{Load:true})
+  key=getLinks(app_agent_id,"app_agent_register",{Load:true})
   if (isErr(key)) {
   debug("Returning : false")
     return false}
@@ -71,15 +71,15 @@ function verifyUser(app_agent_id){
 
 
 function getUserDetails(app_agent_id){
-  key=getLink(app_agent_id,"app_agent_register",{Load:true})
+  key=getLinks(app_agent_id,"app_agent_register",{Load:true})
   if (isErr(key)) {
     return false}
   if (key != undefined) {
-    source=JSON.parse(key.Links[0].E)
-    a=getLink(source.perm_dpki_id,"users",{Load:true})
-    userDetails=JSON.parse(a.Links[0].E)
+    source=key[0].Entry
+    a=getLinks(source.perm_dpki_id,"users",{Load:true})
+    userDetails=a[0].Entry
     arg={
-    key : key.Links[0].E,
+    key : key[0].Entry,
     shared_ID : userDetails.shared_ID,
     address : userDetails.address,
     email : userDetails.email
