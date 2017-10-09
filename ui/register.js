@@ -18,7 +18,7 @@ function checkInputs(){
 function doRegister(arg){
 
   console.log('registering clicked');
-  $.post("/fn/keyRegistration/keyRegistrationCreate", JSON.stringify(arg),
+  $.post("/fn/keyRegistration/keyRegistration", JSON.stringify(arg),
     function(hash) {
       console.log('register: '+hash)
       $.post("/fn/keyRegistration/isRegistered", "",
