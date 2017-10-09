@@ -1,11 +1,10 @@
-
 {
 "Version": 1,
 
 "UUID": "aee5cc40-8c58-4331-8125-fda7e3b61ccc",
 
 "Name": "DPKI",
-"RequiresVersion": 15,
+"RequiresVersion": 17,
 "Properties": {
   "description": "Distributed Public Key Infrastructure which runs on holochain",
   "language": "en",
