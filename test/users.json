@@ -4,10 +4,8 @@
       "Zome": "keyRegistration",
       "FnName": "keyRegistrationCreate",
       "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
-      "Output": "\"{\\\"perm_dpki_id\\\":\\\"Qmdotqz8tTQrSh6yVirqSpDWzbJWJEVx9nNLf3FnLoSbuV\\\",\\\"public_key\\\":\\\"QmPcpNj6dBz53SvJ8SexLJSvnzSysM8pf6dZFaJ7H6yN1U\\\",\\\"revocation_Method_ID\\\":\\\"1\\\",\\\"shared_ID\\\":\\\"test@example.com\\\"}\"" ,
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
+      "Regexp": "{\"perm_dpki_id\":\"Qm[a-zA-Z0-9]*\",\"public_key\":\"Qm[a-zA-Z0-9]*\",\"revocation_Method_ID\":\"1\",\"shared_ID\":\"Jack\"}" ,
+      "Exposure":"public"
   },
   {
       "Convey":"Calling the revokeKeySelf to revoke the present key",
@@ -35,8 +33,8 @@
       "Convey":"Updating the Key Registration after revokeKeySelf",
       "Zome": "keyRegistration",
       "FnName": "keyRegistrationUpdate",
-      "Input" : "%agent%",
-      "Output": "%h1%",
+      "Input" : {"username":"JackUpdate","email":"jackT@hammerupdate.com","address":"123 Moraga update St","revocation_method":"2"},
+      "Output": "\"%h1%\"",
       "Exposure":"public",
       "Err": "",
       "Regexp": ""

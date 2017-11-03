@@ -1,0 +1,16 @@
+{
+	"title": "User List Schema",
+	"type": "object",
+	"properties": {
+		"un1": {
+			"type": "string"
+		},"un2": {
+			"type": "string"
+		},"un3": {
+			"type": "string"
+		},"un4": {
+			"type": "string"
+		}
+	},
+    "required": ["un1", "un2","un3","un4"]
+}

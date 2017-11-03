@@ -1,100 +1,193 @@
 function genesis(){
-  //keyRegistrationCreate();
+/*TODO remove this for the app to works
+JUST FOR TESTING THE HOLOCHAT APP*/
+//  arg={username:"Jack",email:"jackT@hammer.com",address:"123 Moraga St",revocation_method:"1"};
+//  keyRegistrationCreate(arg);
   return true;
 }
 
-function keyRegistrationCreate(arg){
-  debug("select Revocation method");//TODO for now the default selection will be "1" i.e the revocation_key method
+function keyRegistrationCreate(arg,n_user_list){
+if(arg.revocation_method==1){
+  data=keyRegistrationCreateSelf(arg);
+}else if(arg.revocation_method==2){
+data=keyRegistrationCreateMN(arg,n_user_list);
+}else if (arg.revocation_method==3) {
+
+}else return false
+  return data
+}
+
+
+function keyRegistrationCreateSelf(arg){
+  call("users","usersUpdateDetails",arg)
+  var n_user_list
+  debug("select Revocation method");
   debug("Creating the user's keyRegistration");
-  revocation_Method_ID=arg.revocation_method;
-  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
+  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method}
+  me=getMeAgent();
+  key=commit("keyRegistration",keyRegistration);
+  commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
+  debug("user_keyRegistration_link: "+JSON.stringify(getLinks(me,"keyRegistration",{Load:true})));
+  a=getLinks(me,"keyRegistration",{Load:true});
+//Revocation Key can be used for further work from here
+    debug("revocationKey is ="+ makeHash("keyRegistration",keyRegistration));
+//return for the testing the function
+return a[0].Entry;
+}
+
+//TODO CODE for MN
+function keyRegistrationCreateMN(arg,n_user_list){
+  //update user details
+  call("users","usersUpdateDetails",arg)
+
+  //Commit the keyRegistration
+  keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method}
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
   debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
   a=getLink(me,"keyRegistration",{Load:true});
-  debug("User keyRegistration Created with the preset revocation method to 1");
-  debug("===========================Phase 1.1 End===========================");
-  debug("===========================Phase 1.2 Starting===========================");
-//Revocation Key can be used for further work from here
   debug("revocationKey is ="+ makeHash(keyRegistration));
-  debug("===========================Phase 1.2 End===========================");
-//return for the testing the function
-return a.Links[0].E;
+
+  //commit the user list too.
+    key={keyRegistration:keyRegistration,
+    n_user_list:n_user_list}
+    debug("Key : "+JSON.stringify(key))
+
+    if(!saveUsersList(n_user_list)){
+      return false
+    }
+    else {
+      //TODO Decided what has to be signed ??
+      test=getKeySigned(key);
+      return test
+    }
+
+
+}
+
+function getKeySigned(key){
+  keyRegistration=key.keyRegistration;
+  n_user_list=key.n_user_list;
+  reply1=send(getAgent(n_user_list.un1),keyRegistration)
+  reply2=send(getAgent(n_user_list.un2),keyRegistration)
+  reply3=send(getAgent(n_user_list.un3),keyRegistration)
+  reply4=send(getAgent(n_user_list.un4),keyRegistration)
+
+reply={reply1:reply1,reply2:reply2,reply3:reply3,reply4:reply4}
+
+return reply
 }
 
 
-function isRegistered() {
+//TODO This is the code that is recived by the N users who has to decide to sign the key
+function receive(from,keyRegistration){
+  debug("Recived the message"+keyRegistration);
+//  ret=sign()
+  //return ret
+  return true
+}
+//TODO  NOT DONE YET
+//TODO here we verify the signature of the N people who sign
+function verifySig(signature,data,public_key){
+  var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
+  debug(public_key.C)
+  //pass=verifySignature(signature,data,public_key)
+  if(!verifySignature(signature,data,public_key)){
+    return false
+  }
+  else{
+    return true
+  }
+}
+
+//Create a list of users using their perm_dpki_id
+function saveUsersList(n_user_list){
   me=getMeAgent();
-    var registered_users_key = getLink(me, "keyRegistration",{Load:true})
-    debug("Registered users are: "+JSON.stringify(registered_users_key));
-    if( registered_users_key instanceof Error) return false
-    registered_users_key = registered_users_key.Links
-    var agent_id = App.Key.Hash
-    for(var i=0; i < registered_users_key.length; i++) {
-        var profile = JSON.parse(registered_users_key[i]["E"])
-        debug("Registered user key "+i+" is " + profile.shared_ID)
-        if( profile.public_key == agent_id) return true;
+  debug(JSON.stringify(n_user_list))
+//Check if user list is valid
+  if(!getAgent(n_user_list.un1)||!getAgent(n_user_list.un2)||!getAgent(n_user_list.un3)||!getAgent(n_user_list.un4))
+  {
+    debug("*ERROR : One of the users in the list does'nt Exist")
+    return false
+  }
+  key=commit("nUserList",n_user_list);
+  debug(key);
+  commit("user_nlist_link", {Links:[{Base:me,Link:key,Tag:"nUserList"}]});
+  debug("user_nlist_link: "+JSON.stringify(getLink(me,"nUserList",{Load:true})));
+  test=getLink(me,"nUserList",{Load:false});
+return test.Links[0].H
+}
+////////////////////////////////////////////
+
+//This is just going to check if the userAddress that was given actually exits
+// return the source i.e the public_key if it exists else false
+function getAgent(handleHash) {
+    var directory = getDirectory();
+  //  var handleHash = makeHash("handle",handle);
+    var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
+debug("Sources: "+sources)
+    if (isErr(sources)) {sources = [];}
+    if (sources != undefined) {
+        var n = sources.length -1;
+        return (n >= 0) ? sources[n] : false;
     }
     return false;
 }
 
 
 
-function selectRevocationMethod(){
-  // This is a multiple choice in the UI. return the choice that the  user makes
-  // 1 = Revocation Key
-  // 2 = M of N Revocation
-  // 3 = Revocation Athority
-  choice="1";
-  return choice;
+function isRegistered() {
+  me=getMeAgent();
+    var registered_users_key = getLinks(me, "keyRegistration",{Load:true})
+    debug("Registered users are: "+JSON.stringify(registered_users_key));
+    if( registered_users_key instanceof Error) return false
+    var agent_id = App.Key.Hash
+    for(var i=0; i < registered_users_key.length; i++) {
+        var profile = registered_users_key[i].Entry
+        debug("Registered user key "+i+" is " + profile.shared_ID)
+        if( profile.public_key == agent_id) return true;
+    }
+    return false;
 }
-
-function keyRegistrationUpdate(revoked_key){
+function keyRegistrationUpdate(arg){
   debug("++++Update key Registration+++++")
   //me=revoked_key;
-  var kr = doGetLink(revoked_key,"keyRegistration");
+  var kr = doGetLink(App.Agent.Hash,"keyRegistration");
   var n = kr.length - 1;
   debug("N="+n);
   if (n >= 0) {
   var oldKey = kr[n];
   debug("oldkeyRegistration"+ JSON.stringify(oldKey))
-  revocation_Method_ID=selectRevocationMethod();
-
+  //revocation_Method_ID=selectRevocationMethod();
+debug(arg.username)
   //TODO change the "2" when the revocation method is called from the UI Hash actually changes
   /*Done because the same vause is not replaced in the DHT wheich gives an ERROR*/
   //new_keyRegistration={perm_dpki_id:App.Agent.Hash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:"2"};
-    new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:App.Agent.String,revocation_Method_ID:revocation_Method_ID};
-  /*  debug("App.Agent.Hash="+App.Agent.Hash)
-    debug("App.AgentTop.Hash="+App.Agent.TopHash)
-    debug("App.Key.Hash="+App.Key.Hash)
-  */
+    new_keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method};
   var key = update("keyRegistration",new_keyRegistration,oldKey);
   debug(new_keyRegistration+" is "+key);
   commit("user_keyRegistration_link",
          {Links:[
-             {Base:revoked_key,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
-             {Base:revoked_key,Link:key,Tag:"keyRegistration"}
+             {Base:App.Agent.Hash,Link:oldKey,Tag:"keyRegistration",LinkAction:HC.LinkAction.Del},
+             {Base:App.Agent.Hash,Link:key,Tag:"keyRegistration"}
          ]});
       }
-  debug("New_user_keyRegistration_link: "+JSON.stringify(getLink(revoked_key,"keyRegistration",{Load:true})));
-  a=getLink(revoked_key,"keyRegistration",{Load:true})
-  return a.Links[0].H;
+  debug("New_user_keyRegistration_link: "+JSON.stringify(getLinks(App.Agent.Hash,"keyRegistration",{Load:true})));
+  a=getLinks(App.Agent.Hash,"keyRegistration",{Load:true})
+  return a[0].Hash;
 }
 
 function doGetLink(base,tag) {
     // get the tag from the base in the DHT
-    var links = getLink(base, tag,{Load:true});
+    var links = getLinks(base, tag,{Load:true});
     if (isErr(links)) {
         links = [];
-    }
-     else {
-        links = links.Links;
     }
     debug("Links:"+JSON.stringify(links));
     var links_filled = [];
     for (var i=0;i <links.length;i++) {
-        links_filled.push(links[i].H);
+        links_filled.push(links[i].Hash);
     }
     return links_filled;
 }

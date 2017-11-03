@@ -1,35 +1,72 @@
+function checkInputs(){
+  var arg = {
+    revocationKey: $("#revocationKey").val(),
+    username: $("#name").val(),
+    email: $("#email").val(),
+    address: $("#address").val(),
+    revocation_method: $("#revocation_method").val()
+  };
 
-function revoke(){
-  $.post("/fn/revocation/revocation", "",
+  if(arg.username==""||arg.email==""||arg.address==""||arg.revocation_method==0){
+    alert("Invalid Input- [Please see that you have filled all the blocks]"+arg.username+"arg"+arg.email+"arg"+arg.address+"arg"+arg.revocation_method);
+  modal.style.display = "block";
+  }
+  else{
+    revoke(arg);
+  }
+}
+
+function revoke(arg){
+  $.post("/fn/revocation/revocation", JSON.stringify(arg),
       function(registered) {
 
           if(!JSON.parse(registered)){
-              alert("Revocation Failed");
+              alert("ERROR : Revocation Failed");
           } else {
-          alert("Revocation was Succesfull");  
+          alert("Revocation was Succesfull");
           }
 
       }
   ).error(function(response) {
 
   });
+  modal.style.display = "none";
 }
 
+
+function clickRevoke(){
+  $.post("/fn/keyRegistration/isRegistered", "",
+      function(registered) {
+
+          if(!JSON.parse(registered)){
+           alert("ERROR : You have Not Registered");
+          } else {
+             modal.style.display = "block";
+          }
+
+      }
+  ).error(function(response) {
+
+  });
+
+
+
+}
 
 $(window).ready(function() {
    $.post("/fn/keyRegistration/isRegistered", "",
        function(registered) {
 
            if(!JSON.parse(registered)){
-               modal.style.display = "block";
+            alert("ERROR : You have Not Registered");
            } else {
-              // alert("You have already been Registered");
+            //   alert("You have already been Registered");
            }
 
        }
    ).error(function(response) {
 
    });
-$("#butt").click(revoke);
-
+$("#butt").click(clickRevoke);
+$("#revoke").click(checkInputs);
 });
