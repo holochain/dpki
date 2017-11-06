@@ -4,9 +4,24 @@
 [![Gitter](https://badges.gitter.im/metacurrency/holochain.svg)](https://gitter.im/metacurrency/holochain?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
-**Distributed Public Key Infrastrucre on Holochain**
+**Distributed Public Key Infrastructure on Holochain**
 
 **[Code Status:](https://github.com/metacurrency/holochain/milestones?direction=asc&sort=completeness&state=all)** Pre-alpha. Not for production use. This application has not been audited for any security validation.
+
+The DPKI module provides a few main features:
+ 1. A set of better key management methods for Holochain users.
+    - Revocation key distinct from source chain key, 
+    - delegation of a revocation authority, 
+    - M of N signing by authorized peers for key revocation.
+ 2. A pluggable mixin module for any Holochain application to bridge to DPKI for both key management and continuity of identity across multiple Holochain applications
+ 3. A space to aggregate identity information:
+    - Delegation of public-facing identity services to an identity service provider of your choosing.
+    - Storage of identity information in PRIVATE entries on your own DPKI chain for selective release via capabilities tokens.
+    - Linking of signed claims from third parties authenticating aspects of your identity.
+    
+We see these base features enabling a massive emergent identity ecosystem built on a foundation of self-managed public/private keys.
+
+More info to come!
 
 ## Installation
 
@@ -44,7 +59,12 @@ hcdev test
 
 ## Feature Roadmap and Current Progress
 
-TODO
+ - [ ] Bring up to date with Alpha0 Holochain release
+ - [ ] Security review and code cleanup of existing code-base
+ - [ ] Multi-sig via Schnorr sigs instead of composed via holochain sigs?
+ - [ ] Oauth bridging to enable people to be their own Oauth provider for outside web applications. :D
+ - [ ] Clarify structure of identity claims & interfaces with them
+ - [ ] Clarify 3rd-party identity provider protocols.
 
 
 ## Contribute
