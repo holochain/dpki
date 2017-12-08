@@ -1,13 +1,14 @@
-[
-  {
-      "Convey":"Checking if the Key Registration is able to update",
-      "Zome": "keyRegistration",
-      "FnName": "keyRegistrationUpdate",
-      "Input" : "",
-      "Output": "%h1%",
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
-  }
-
-]
+{
+    "Tests":[
+        {
+            "Convey":"Checking if the Key Registration is able to update",
+            "Zome": "keyRegistration",
+            "FnName": "keyRegistrationUpdate",
+            "Input" : "",
+            "Output": "%h1%",
+            "Exposure":"public",
+            "Err": "",
+            "Regexp": ""
+        }
+    ]
+}

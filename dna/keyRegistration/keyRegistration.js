@@ -45,8 +45,8 @@ function keyRegistrationCreateMN(arg,n_user_list){
   me=getMeAgent();
   key=commit("keyRegistration",keyRegistration);
   commit("user_keyRegistration_link", {Links:[{Base:me,Link:key,Tag:"keyRegistration"}]});
-  debug("user_keyRegistration_link: "+JSON.stringify(getLink(me,"keyRegistration",{Load:true})));
-  a=getLink(me,"keyRegistration",{Load:true});
+  debug("user_keyRegistration_link: "+JSON.stringify(getLinks(me,"keyRegistration",{Load:true})));
+  a=getLinks(me,"keyRegistration",{Load:true});
   debug("revocationKey is ="+ makeHash(keyRegistration));
 
   //commit the user list too.
@@ -114,9 +114,14 @@ function saveUsersList(n_user_list){
   key=commit("nUserList",n_user_list);
   debug(key);
   commit("user_nlist_link", {Links:[{Base:me,Link:key,Tag:"nUserList"}]});
-  debug("user_nlist_link: "+JSON.stringify(getLink(me,"nUserList",{Load:true})));
-  test=getLink(me,"nUserList",{Load:false});
-return test.Links[0].H
+  debug("user_nlist_link: "+JSON.stringify(getLinks(me,"nUserList",{Load:true})));
+    links=getLinks(me,"nUserList",{Load:false});
+    if (isErr(links) || links.length == 0) {
+        return ""
+    }
+    else {
+        return links[0].Hash;
+    }
 }
 ////////////////////////////////////////////
 
@@ -174,7 +179,7 @@ debug(arg.username)
          ]});
       }
   debug("New_user_keyRegistration_link: "+JSON.stringify(getLinks(App.Agent.Hash,"keyRegistration",{Load:true})));
-  a=getLinks(App.Agent.Hash,"keyRegistration",{Load:true})
+    a=getLinks(App.Agent.Hash,"keyRegistration",{Load:true})
   return a[0].Hash;
 }
 

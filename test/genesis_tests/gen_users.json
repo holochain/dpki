@@ -1,23 +1,24 @@
-[
-  {
-      "Convey":"Checking if the users details is stored",
-      "Zome": "users",
-      "FnName": "UserCreate",
-      "Input" : "",
-      "Output": "%h1%",
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
-  },
-  {
-      "Convey":"Checking if the Key Registration is getting created",
-      "Zome": "keyRegistration",
-      "FnName": "keyRegistrationCreate",
-      "Input" : "",
-      "Output": "%h1%",
-      "Exposure":"public",
-      "Err": "",
-      "Regexp": ""
-  }
-
-]
+{
+    "Tests":[
+        {
+            "Convey":"Checking if the users details is stored",
+            "Zome": "users",
+            "FnName": "UserCreate",
+            "Input" : "",
+            "Output": "%h1%",
+            "Exposure":"public",
+            "Err": "",
+            "Regexp": ""
+        },
+        {
+            "Convey":"Checking if the Key Registration is getting created",
+            "Zome": "keyRegistration",
+            "FnName": "keyRegistrationCreate",
+            "Input" : "",
+            "Output": "%h1%",
+            "Exposure":"public",
+            "Err": "",
+            "Regexp": ""
+        }
+    ]
+}
