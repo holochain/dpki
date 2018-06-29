@@ -48,12 +48,14 @@ return false
 }
 
 function hasRegisteredKey(app_agent_id){
+try{
   key=getLinks(app_agent_id,"app_agent_register",{Load:true})
   debug("key: "+key)
-  if (isErr(key)) {
-  debug("ERROR isErr : false")
-    return false}
-  if (key != undefined) {
+}catch(e){
+  debug(e);
+  return false;
+}
+  if (key != undefined && key!="") {
     debug("Returning : true")
   return true
   }
@@ -74,12 +76,15 @@ function verifyUser(app_agent_id){
 
 
 function getUserDetails(app_agent_id){
-  key=getLinks(app_agent_id,"app_agent_register",{Load:true})
-  debug("key: "+key)
-  if (isErr(key)) {
-    debug("ERROR isErr : false")
-    return false}
-  if (key != undefined) {
+
+  try{
+    key=getLinks(app_agent_id,"app_agent_register",{Load:true})
+  }
+  catch(e){
+    debug(e);
+    return false
+  }
+  if (key != undefined && key!="") {
     source=key[0].Entry
     a=getLinks(source.perm_dpki_id,"users",{Load:true})
     userDetails=a[0].Entry

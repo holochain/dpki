@@ -6,21 +6,25 @@ JUST FOR TESTING THE HOLOCHAT APP*/
   return true;
 }
 
-function keyRegistrationCreate(arg,n_user_list){
+
+//@param{revocation_method:"",un_user_list:""}
+function keyRegistrationCreate(arg){
 if(arg.revocation_method==1){
   data=keyRegistrationCreateSelf(arg);
 }else if(arg.revocation_method==2){
-data=keyRegistrationCreateMN(arg,n_user_list);
+data=keyRegistrationCreateMN(arg);
 }else if (arg.revocation_method==3) {
+// TODO:
 
-}else return false
-  return data
+}else {
+  return false
+}
+return data
 }
 
 
 function keyRegistrationCreateSelf(arg){
   call("users","usersUpdateDetails",arg)
-  var n_user_list
   debug("select Revocation method");
   debug("Creating the user's keyRegistration");
   keyRegistration={perm_dpki_id:App.Agent.TopHash,public_key:App.Key.Hash,shared_ID:arg.username,revocation_Method_ID:arg.revocation_method}
@@ -36,7 +40,7 @@ return a[0].Entry;
 }
 
 //TODO CODE for MN
-function keyRegistrationCreateMN(arg,n_user_list){
+function keyRegistrationCreateMN(arg){
   //update user details
   call("users","usersUpdateDetails",arg)
 
@@ -51,10 +55,10 @@ function keyRegistrationCreateMN(arg,n_user_list){
 
   //commit the user list too.
     key={keyRegistration:keyRegistration,
-    n_user_list:n_user_list}
+    n_user_list:arg.n_user_list}
     debug("Key : "+JSON.stringify(key))
 
-    if(!saveUsersList(n_user_list)){
+    if(!saveUsersList(arg.n_user_list)){
       return false
     }
     else {
