@@ -7,13 +7,13 @@ JUST FOR TESTING THE HOLOCHAT APP*/
 }
 
 
-//@param{revocation_method:"",un_user_list:""}
+//@param{usernaem:"",revocation_method:"",un_user_list:""}
 function keyRegistrationCreate(arg){
-if(arg.revocation_method==1){
+if(arg.revocation_method=="1"){
   data=keyRegistrationCreateSelf(arg);
-}else if(arg.revocation_method==2){
+}else if(arg.revocation_method=="2"){
 data=keyRegistrationCreateMN(arg);
-}else if (arg.revocation_method==3) {
+}else if (arg.revocation_method=="3") {
 // TODO:
 
 }else {
@@ -36,7 +36,7 @@ function keyRegistrationCreateSelf(arg){
 //Revocation Key can be used for further work from here
     debug("revocationKey is ="+ makeHash("keyRegistration",keyRegistration));
 //return for the testing the function
-return a[0].Entry;
+return a[0].Hash;
 }
 
 //TODO CODE for MN

@@ -44,7 +44,7 @@
           {
             "Name": "usersCreate",
             "CallingType": "string",
-            "Exposure": "public"
+            "Exposure": "private"
 
           },{
             "Name": "usersUpdateDetails",

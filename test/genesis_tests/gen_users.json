@@ -3,10 +3,9 @@
         {
             "Convey":"Checking if the users details is stored",
             "Zome": "users",
-            "FnName": "UserCreate",
+            "FnName": "userCreate",
             "Input" : "",
             "Output": "%h1%",
-            "Exposure":"public",
             "Err": "",
             "Regexp": ""
         },
@@ -15,7 +14,7 @@
             "Zome": "keyRegistration",
             "FnName": "keyRegistrationCreate",
             "Raw":true,
-            "Input" : "keyRegistrationCreate({revocation_method:1})",
+            "Input" : "keyRegistrationCreate({username:\"zo-el\",revocation_method:\"1\"})",
             "Output": "%h1%",
             "Exposure":"public",
             "Err": "",
