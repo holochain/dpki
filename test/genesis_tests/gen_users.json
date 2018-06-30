@@ -10,15 +10,16 @@
             "Regexp": ""
         },
         {
-            "Convey":"Checking if the Key Registration is getting created",
+            "Convey":"Checking if the Key Registration is getting created (Using Methord 1 'keyRegistrationCreateSelf')",
             "Zome": "keyRegistration",
             "FnName": "keyRegistrationCreate",
-            "Raw":true,
-            "Input" : "keyRegistrationCreate({username:\"zo-el\",revocation_method:\"1\"})",
-            "Output": "%h1%",
+            "Input" : {"username":"Jack","email":"jackT@hammer.com","address":"123 Moraga St","revocation_method":"1"},
+            "Output": {"perm_dpki_id":"%agent%","public_key":"%key%","revocation_Method_ID":"1","shared_ID":"Jack"},
             "Exposure":"public",
             "Err": "",
             "Regexp": ""
+        },{
+          "Convey":""
         }
     ]
 }

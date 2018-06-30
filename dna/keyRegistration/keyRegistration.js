@@ -36,7 +36,7 @@ function keyRegistrationCreateSelf(arg){
 //Revocation Key can be used for further work from here
     debug("revocationKey is ="+ makeHash("keyRegistration",keyRegistration));
 //return for the testing the function
-return a[0].Hash;
+return a[0].Entry;
 }
 
 //TODO CODE for MN
