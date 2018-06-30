@@ -84,25 +84,19 @@ return reply
 }
 
 
-//TODO This is the code that is recived by the N users who has to decide to sign the key
 function receive(from,keyRegistration){
   debug("Recived the message"+keyRegistration);
-//  ret=sign()
-  //return ret
-  return true
+  ret=sign(JSON.stringify(keyRegistration))
+  return ret
 }
-//TODO  NOT DONE YET
+
+//TODO  Panic
 //TODO here we verify the signature of the N people who sign
-function verifySig(signature,data,public_key){
-  var public_key = get(public_key_Hash,{GetMask:HC.GetMask.Entry});
-  debug(public_key.C)
-  //pass=verifySignature(signature,data,public_key)
-  if(!verifySignature(signature,data,public_key)){
-    return false
+function verifySig(data,public_key){
+  if(!verifySignature("",data,public_key)){
+    return false;
   }
-  else{
-    return true
-  }
+  return true;
 }
 
 //Create a list of users using their perm_dpki_id
@@ -135,7 +129,7 @@ function getAgent(handleHash) {
     var directory = getDirectory();
   //  var handleHash = makeHash("handle",handle);
     var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
-debug("Sources: "+sources)
+    debug("Sources: "+sources)
     if (isErr(sources)) {sources = [];}
     if (sources != undefined) {
         var n = sources.length -1;
