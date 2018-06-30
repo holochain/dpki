@@ -42,10 +42,15 @@ function registerDpkiKeyTo(app_agent_id) {
   return false
 }
 
-function hasRegisteredKey(app_agent_id) {
-  key = getLinks(app_agent_id, "app_agent_register", { Load: true })
-  debug("key: " + key)
-  if (key.length !== 0) {
+function hasRegisteredKey(app_agent_id){
+try{
+  key=getLinks(app_agent_id,"app_agent_register",{Load:true})
+  debug("key: "+key)
+}catch(e){
+  debug(e);
+  return false;
+}
+  if (key != undefined && key!="") {
     debug("Returning : true")
     return true
   }
@@ -65,18 +70,24 @@ function verifyUser(app_agent_id) {
 }
 
 
-function getUserDetails(app_agent_id) {
-  key = getLinks(app_agent_id, "app_agent_register", { Load: true })
-  debug("key: " + key)
-  if (key.length !== 0) {
-    source = key[0].Entry
-    a = getLinks(source.perm_dpki_id, "users", { Load: true })
-    userDetails = a[0].Entry
-    arg = {
-      key: key[0].Entry,
-      shared_ID: userDetails.shared_ID,
-      address: userDetails.address,
-      email: userDetails.email
+function getUserDetails(app_agent_id){
+
+  try{
+    key=getLinks(app_agent_id,"app_agent_register",{Load:true})
+  }
+  catch(e){
+    debug(e);
+    return false
+  }
+  if (key != undefined && key!="") {
+    source=key[0].Entry
+    a=getLinks(source.perm_dpki_id,"users",{Load:true})
+    userDetails=a[0].Entry
+    arg={
+    key : key[0].Entry,
+    shared_ID : userDetails.shared_ID,
+    address : userDetails.address,
+    email : userDetails.email
     }
     debug("returning : " + JSON.stringify(arg))
     return JSON.stringify(arg)

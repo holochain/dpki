@@ -6,24 +6,25 @@ function genesis() {
   return true;
 }
 
-function keyRegistrationCreate(arg, n_user_list) {
-  if (arg.revocation_method == 1) {
-    data = keyRegistrationCreateSelf(arg);
-  }
-  else if (arg.revocation_method == 2) {
-    data = keyRegistrationCreateMN(arg, n_user_list);
-  }
-  else if (arg.revocation_method == 3) {
 
-  }
-  else return false
-  return data
+//@param{usernaem:"",revocation_method:"",un_user_list:""}
+function keyRegistrationCreate(arg){
+if(arg.revocation_method=="1"){
+  data=keyRegistrationCreateSelf(arg);
+}else if(arg.revocation_method=="2"){
+data=keyRegistrationCreateMN(arg);
+}else if (arg.revocation_method=="3") {
+// TODO:
+
+}else {
+  return false
+}
+return data
 }
 
 
-function keyRegistrationCreateSelf(arg) {
-  call("users", "usersUpdateDetails", arg)
-  var n_user_list
+function keyRegistrationCreateSelf(arg){
+  call("users","usersUpdateDetails",arg)
   debug("select Revocation method");
   debug("Creating the user's keyRegistration");
   keyRegistration = { perm_dpki_id: App.Agent.TopHash, public_key: App.Key.Hash, shared_ID: arg.username, revocation_Method_ID: arg.revocation_method }
@@ -39,7 +40,7 @@ function keyRegistrationCreateSelf(arg) {
 }
 
 //TODO CODE for MN
-function keyRegistrationCreateMN(arg, n_user_list) {
+function keyRegistrationCreateMN(arg){
   //update user details
   call("users", "usersUpdateDetails", arg)
 
@@ -53,20 +54,18 @@ function keyRegistrationCreateMN(arg, n_user_list) {
   debug("revocationKey is =" + makeHash(keyRegistration));
 
   //commit the user list too.
-  key = {
-    keyRegistration: keyRegistration,
-    n_user_list: n_user_list
-  }
-  debug("Key : " + JSON.stringify(key))
+    key={keyRegistration:keyRegistration,
+    n_user_list:arg.n_user_list}
+    debug("Key : "+JSON.stringify(key))
 
-  if (!saveUsersList(n_user_list)) {
-    return false
-  }
-  else {
-    //TODO Decided what has to be signed ??
-    test = getKeySigned(key);
-    return test
-  }
+    if(!saveUsersList(arg.n_user_list)){
+      return false
+    }
+    else {
+      //TODO Decided what has to be signed ??
+      test=getKeySigned(key);
+      return test
+    }
 
 
 }
@@ -85,25 +84,19 @@ function getKeySigned(key) {
 }
 
 
-//TODO This is the code that is recived by the N users who has to decide to sign the key
-function receive(from, keyRegistration) {
-  debug("Recived the message" + keyRegistration);
-  //  ret=sign()
-  //return ret
-  return true
+function receive(from,keyRegistration){
+  debug("Recived the message"+keyRegistration);
+  ret=sign(JSON.stringify(keyRegistration))
+  return ret
 }
-//TODO  NOT DONE YET
+
+//TODO  Panic
 //TODO here we verify the signature of the N people who sign
-function verifySig(signature, data, public_key) {
-  var public_key = get(public_key_Hash, { GetMask: HC.GetMask.Entry });
-  debug(public_key.C)
-  //pass=verifySignature(signature,data,public_key)
-  if (!verifySignature(signature, data, public_key)) {
-    return false
+function verifySig(data,public_key){
+  if(!verifySignature("",data,public_key)){
+    return false;
   }
-  else {
-    return true
-  }
+  return true;
 }
 
 //Create a list of users using their perm_dpki_id
@@ -134,14 +127,14 @@ function saveUsersList(n_user_list) {
 function getAgent(handleHash) {
   var directory = getDirectory();
   //  var handleHash = makeHash("handle",handle);
-  var sources = get(handleHash, { GetMask: HC.GetMask.Sources });
-  debug("Sources: " + sources)
-  if (isErr(sources)) { sources = []; }
-  if (sources != undefined) {
-    var n = sources.length - 1;
-    return (n >= 0) ? sources[n] : false;
-  }
-  return false;
+    var sources = get(handleHash,{GetMask:HC.GetMask.Sources});
+    debug("Sources: "+sources)
+    if (isErr(sources)) {sources = [];}
+    if (sources != undefined) {
+        var n = sources.length -1;
+        return (n >= 0) ? sources[n] : false;
+    }
+    return false;
 }
 
 

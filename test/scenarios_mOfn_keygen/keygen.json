@@ -15,7 +15,7 @@
             "Zome": "keyRegistration",
             "FnName": "getKeySigned",
             "Input" : {"n_user_list":{"un1":"%agent%","un2":"%agent%","un3":"%agent%","un4":"%agent%"},"keyRegistration":{"username":"joel"}},
-            "Output":{"reply1":"true","reply2":"true","reply3":"true","reply4":"true"},
+            "Output":{"reply1":"\"5Es27YwFbursMxwo48GXf6VNjhV6B4cxn3rdw8oQNREa1rjo8kkkaufQBX8oux4wbeJP9SdJ7QaeTwQCvj2EusG3\"","reply2":"\"5Es27YwFbursMxwo48GXf6VNjhV6B4cxn3rdw8oQNREa1rjo8kkkaufQBX8oux4wbeJP9SdJ7QaeTwQCvj2EusG3\"","reply3":"\"5Es27YwFbursMxwo48GXf6VNjhV6B4cxn3rdw8oQNREa1rjo8kkkaufQBX8oux4wbeJP9SdJ7QaeTwQCvj2EusG3\"","reply4":"\"5Es27YwFbursMxwo48GXf6VNjhV6B4cxn3rdw8oQNREa1rjo8kkkaufQBX8oux4wbeJP9SdJ7QaeTwQCvj2EusG3\""},
             "Exposure":"public",
             "Err": "",
             "Regexp": "",
